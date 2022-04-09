@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/views/screens/home.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Work OS',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xffede7dc),
+        scaffoldBackgroundColor: kScaffoldBGColor,
         primarySwatch: Colors.blue,
       ),
       home: HomeScreen(),

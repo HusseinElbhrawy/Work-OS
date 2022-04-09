@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TaskWidget extends StatelessWidget {
   const TaskWidget({
@@ -14,7 +15,22 @@ class TaskWidget extends StatelessWidget {
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         onTap: () {},
-        onLongPress: () {},
+        onLongPress: () {
+          Get.dialog(
+            AlertDialog(
+              content: TextButton.icon(
+                onPressed: () {
+                  //ToDo:Remove Task
+                },
+                icon: const Icon(Icons.delete),
+                label: const Text('Remove'),
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.red),
+                ),
+              ),
+            ),
+          );
+        },
         leading: Container(
           padding: const EdgeInsetsDirectional.only(end: 10),
           decoration: const BoxDecoration(
@@ -35,9 +51,9 @@ class TaskWidget extends StatelessWidget {
         ),
         trailing: IconButton(
           onPressed: () {},
-          icon: Icon(Icons.keyboard_arrow_right),
+          icon: const Icon(Icons.keyboard_arrow_right),
         ),
-        title: Text(
+        title: const Text(
           'Title',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -51,7 +67,7 @@ class TaskWidget extends StatelessWidget {
               Icons.linear_scale,
               color: Colors.pink.shade800,
             ),
-            Text(
+            const Text(
               'SubTitle / Description',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
