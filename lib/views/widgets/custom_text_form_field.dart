@@ -11,6 +11,9 @@ class CustomTextFormFiled extends StatelessWidget {
     this.suffixIcon,
     this.suffixIconFunction,
     required this.obscureText,
+    required this.focusNode,
+    required this.textInputAction,
+    this.onEditComplete,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -20,12 +23,17 @@ class CustomTextFormFiled extends StatelessWidget {
   final IconData? suffixIcon;
   final Function? suffixIconFunction;
   final bool obscureText;
-
+  final FocusNode focusNode;
+  final TextInputAction textInputAction;
+  final Function? onEditComplete;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
+      textInputAction: textInputAction,
       controller: controller,
       validator: (value) => validator(value),
+      onEditingComplete: () => onEditComplete!(),
       style: const TextStyle(color: Colors.white),
       keyboardType: keyboardType,
       obscureText: obscureText,

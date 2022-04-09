@@ -1,56 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:work_os/views/screens/signup.dart';
+import 'package:work_os/views/screens/login.dart';
 import 'package:work_os/views/widgets/bg_image.dart';
 import 'package:work_os/views/widgets/custom_auth_button.dart';
 import 'package:work_os/views/widgets/custom_text_form_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _SignUpScreenState extends State<SignUpScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  final _formKey = GlobalKey<FormState>();
+  late AnimationController controller;
+  late Animation<double> animation;
+  final _fullNameFocusNode = FocusNode(),
+      _emailFocusNode = FocusNode(),
+      _companyPosition = FocusNode();
+
+  final _passwordFocusNode = FocusNode();
+
+  final emailController = TextEditingController(),
+      passwordController = TextEditingController(),
+      fullNameController = TextEditingController(),
+      companyPositionController = TextEditingController();
 
   bool isObscureText = true;
   IconData iconData = Icons.visibility;
-  final formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(),
-      _passwordController = TextEditingController();
-
-  final _emailFocusNode = FocusNode(), _passwordFocusNode = FocusNode();
+  void changePasswordSuffixIcon() {
+    isObscureText = !isObscureText;
+    setState(() {});
+  }
 
   @override
   void initState() {
-    _controller =
+    controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 20))
           ..repeat();
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.linear);
-    _emailController.clear();
-    _passwordController.clear();
+    animation = CurvedAnimation(parent: controller, curve: Curves.linear);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(backgroundColor: Colors.transparent),
       body: Form(
-        key: formKey,
+        key: _formKey,
         child: Center(
           child: Stack(
             children: [
               AnimatedBuilder(
-                animation: _controller,
+                animation: controller,
                 builder: (BuildContext context, Widget? child) {
-                  return BGImage(animation: _animation);
+                  return BGImage(animation: animation);
                 },
               ),
               Padding(
@@ -59,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen>
                   children: [
                     SizedBox(height: deviceSize.height / 15),
                     Text(
-                      'Login',
+                      'Sign Up',
                       style:
                           Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: Colors.white,
@@ -69,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen>
                     Row(
                       children: [
                         Text(
-                          "Don't have an account?",
+                          "Already have an account?",
                           style:
                               Theme.of(context).textTheme.headline6!.copyWith(
                                     color: Colors.white,
@@ -77,10 +86,10 @@ class _LoginScreenState extends State<LoginScreen>
                         ),
                         TextButton(
                           onPressed: () {
-                            Get.off(() => const SignUpScreen());
+                            Get.off(() => LoginScreen());
                           },
                           child: Text(
-                            '\tSIGN UP',
+                            '\tSign In',
                             style:
                                 Theme.of(context).textTheme.headline6!.copyWith(
                                       color: Colors.blue,
@@ -90,6 +99,23 @@ class _LoginScreenState extends State<LoginScreen>
                       ],
                     ),
                     CustomTextFormFiled(
+                      focusNode: _fullNameFocusNode,
+                      textInputAction: TextInputAction.next,
+                      onEditComplete: () {
+                        _fullNameFocusNode.nextFocus();
+                      },
+                      obscureText: false,
+                      keyboardType: TextInputType.name,
+                      controller: fullNameController,
+                      validator: (value) {
+                        if (value!.length < 2 || value.isEmpty) {
+                          return 'This name is too short';
+                        }
+                        return null;
+                      },
+                      labelText: 'Full Name',
+                    ),
+                    CustomTextFormFiled(
                       focusNode: _emailFocusNode,
                       textInputAction: TextInputAction.next,
                       onEditComplete: () {
@@ -97,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen>
                       },
                       obscureText: false,
                       keyboardType: TextInputType.emailAddress,
-                      controller: _passwordController,
+                      controller: emailController,
                       validator: (value) {
                         if (!value!.contains('@') ||
                             value.isEmpty ||
@@ -109,14 +135,14 @@ class _LoginScreenState extends State<LoginScreen>
                       labelText: 'Email',
                     ),
                     CustomTextFormFiled(
-                      onEditComplete: () {
-                        print('Hello World');
-                      },
                       focusNode: _passwordFocusNode,
-                      textInputAction: TextInputAction.done,
+                      textInputAction: TextInputAction.next,
+                      onEditComplete: () {
+                        FocusScope.of(context).requestFocus(_companyPosition);
+                      },
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: isObscureText,
-                      controller: _emailController,
+                      controller: passwordController,
                       validator: (value) {
                         if (value!.isEmpty || value.length < 7) {
                           return 'This password is short password , it should at least 7 letters';
@@ -127,38 +153,33 @@ class _LoginScreenState extends State<LoginScreen>
                       suffixIcon: isObscureText
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      suffixIconFunction: () {
-                        setState(() {
-                          isObscureText = !isObscureText;
-                          print(isObscureText);
-                        });
-                      },
+                      suffixIconFunction: () => changePasswordSuffixIcon(),
                     ),
-                    Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Forget Password?',
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
-                            decorationThickness: 1,
-                          ),
-                        ),
-                      ),
+                    CustomTextFormFiled(
+                      textInputAction: TextInputAction.done,
+                      focusNode: _companyPosition,
+                      obscureText: false,
+                      onEditComplete: () {
+                        print('Hello World ');
+                      },
+                      keyboardType: TextInputType.text,
+                      controller: companyPositionController,
+                      validator: (value) {
+                        if (value!.isEmpty || value.length < 2) {
+                          return 'Not Valid';
+                        }
+                        return null;
+                      },
+                      labelText: 'Company Position',
                     ),
                     const SizedBox(height: 40),
                     CustomAuthButton(
                       onTap: () {
-                        // Get.off(() => HomeScreen());
                         FocusScope.of(context).unfocus();
+                        if (_formKey.currentState!.validate()) {}
                       },
-                      title: 'Login',
-                      icon: Icons.login,
+                      title: 'Sign Up',
+                      icon: Icons.person_add,
                     ),
                   ],
                 ),
@@ -172,9 +193,13 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   void dispose() {
-    _controller.dispose();
-    _passwordController.dispose();
-    _emailController.dispose();
+    print('Disposed Start');
+    controller.dispose();
+    companyPositionController.dispose();
+    emailController.dispose();
+    fullNameController.dispose();
+    passwordController.dispose();
     super.dispose();
+    print('Disposed End');
   }
 }
