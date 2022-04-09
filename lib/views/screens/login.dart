@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_os/views/screens/forget_password.dart';
 import 'package:work_os/views/screens/signup.dart';
 import 'package:work_os/views/widgets/bg_image.dart';
 import 'package:work_os/views/widgets/custom_auth_button.dart';
@@ -44,127 +45,124 @@ class _LoginScreenState extends State<LoginScreen>
       appBar: AppBar(backgroundColor: Colors.transparent),
       body: Form(
         key: formKey,
-        child: Center(
-          child: Stack(
-            children: [
-              AnimatedBuilder(
-                animation: _controller,
-                builder: (BuildContext context, Widget? child) {
-                  return BGImage(animation: _animation);
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ListView(
-                  children: [
-                    SizedBox(height: deviceSize.height / 15),
-                    Text(
-                      'Login',
-                      style:
-                          Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Don't have an account?",
+        child: Stack(
+          children: [
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (BuildContext context, Widget? child) {
+                return BGImage(animation: _animation);
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ListView(
+                children: [
+                  SizedBox(height: deviceSize.height / 15),
+                  Text(
+                    'Login',
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Don't have an account?",
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.off(() => const SignUpScreen());
+                        },
+                        child: Text(
+                          '\tSIGN UP',
                           style:
                               Theme.of(context).textTheme.headline6!.copyWith(
-                                    color: Colors.white,
+                                    color: Colors.blue,
                                   ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Get.off(() => const SignUpScreen());
-                          },
-                          child: Text(
-                            '\tSIGN UP',
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: Colors.blue,
-                                    ),
-                          ),
-                        )
-                      ],
-                    ),
-                    CustomTextFormFiled(
-                      focusNode: _emailFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onEditComplete: () {
-                        _emailFocusNode.nextFocus();
+                      )
+                    ],
+                  ),
+                  CustomTextFormFiled(
+                    focusNode: _emailFocusNode,
+                    textInputAction: TextInputAction.next,
+                    onEditComplete: () {
+                      _emailFocusNode.nextFocus();
+                    },
+                    obscureText: false,
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _passwordController,
+                    validator: (value) {
+                      if (!value!.contains('@') ||
+                          value.isEmpty ||
+                          !value.contains('.')) {
+                        return 'This email is not valid';
+                      }
+                      return null;
+                    },
+                    labelText: 'Email',
+                  ),
+                  CustomTextFormFiled(
+                    onEditComplete: () {
+                      print('Hello World');
+                    },
+                    focusNode: _passwordFocusNode,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: isObscureText,
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 7) {
+                        return 'This password is short password , it should at least 7 letters';
+                      }
+                      return null;
+                    },
+                    labelText: 'Password',
+                    suffixIcon:
+                        isObscureText ? Icons.visibility : Icons.visibility_off,
+                    suffixIconFunction: () {
+                      setState(() {
+                        isObscureText = !isObscureText;
+                        print(isObscureText);
+                      });
+                    },
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: TextButton(
+                      onPressed: () {
+                        Get.to(() => ForgetPassword());
                       },
-                      obscureText: false,
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _passwordController,
-                      validator: (value) {
-                        if (!value!.contains('@') ||
-                            value.isEmpty ||
-                            !value.contains('.')) {
-                          return 'This email is not valid';
-                        }
-                        return null;
-                      },
-                      labelText: 'Email',
-                    ),
-                    CustomTextFormFiled(
-                      onEditComplete: () {
-                        print('Hello World');
-                      },
-                      focusNode: _passwordFocusNode,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: isObscureText,
-                      controller: _emailController,
-                      validator: (value) {
-                        if (value!.isEmpty || value.length < 7) {
-                          return 'This password is short password , it should at least 7 letters';
-                        }
-                        return null;
-                      },
-                      labelText: 'Password',
-                      suffixIcon: isObscureText
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      suffixIconFunction: () {
-                        setState(() {
-                          isObscureText = !isObscureText;
-                          print(isObscureText);
-                        });
-                      },
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Forget Password?',
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
-                            decorationThickness: 1,
-                          ),
+                      child: const Text(
+                        'Forget Password?',
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
+                          decorationThickness: 1,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 40),
-                    CustomAuthButton(
-                      onTap: () {
-                        // Get.off(() => HomeScreen());
-                        FocusScope.of(context).unfocus();
-                      },
-                      title: 'Login',
-                      icon: Icons.login,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  ),
+                  const SizedBox(height: 40),
+                  CustomAuthButton(
+                    onTap: () {
+                      // Get.off(() => HomeScreen());
+                      FocusScope.of(context).unfocus();
+                    },
+                    title: 'Login',
+                    icon: Icons.login,
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

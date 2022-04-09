@@ -6,18 +6,22 @@ class CustomAuthButton extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.onTap,
+    this.isResetPassword = false,
   }) : super(key: key);
 
   final String title;
   final IconData icon;
   final Function onTap;
+  final bool isResetPassword;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      padding: const EdgeInsets.symmetric(vertical: 13),
+      padding: EdgeInsets.symmetric(vertical: isResetPassword ? 10 : 13),
       elevation: 10,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(13), side: BorderSide.none),
+        borderRadius: BorderRadius.circular(isResetPassword ? 5 : 13),
+        side: BorderSide.none,
+      ),
       color: Colors.pink.shade700,
       onPressed: () => onTap(),
       child: Row(
@@ -33,7 +37,7 @@ class CustomAuthButton extends StatelessWidget {
           const VerticalDivider(color: Colors.transparent),
           Icon(
             icon,
-            color: Colors.white,
+            color: isResetPassword ? Colors.pink.shade700 : Colors.white,
           ),
         ],
       ),
