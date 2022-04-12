@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 
 Future<dynamic> buildFilterDialog(Size deviceSize,
     {required List<String> tasksCategoryList,
-    TextEditingController? categoryController}) {
+    TextEditingController? categoryController,
+    bool isHomeScreen = false}) {
   return Get.dialog(
     AlertDialog(
       title: Text(
@@ -22,13 +23,15 @@ Future<dynamic> buildFilterDialog(Size deviceSize,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return ListTile(
-              onTap: () {
-                categoryController!.text = tasksCategoryList[index];
+              onTap: isHomeScreen
+                  ? () {
+                      categoryController!.text = tasksCategoryList[index];
 
-                log(tasksCategoryList[index].toString());
+                      log(tasksCategoryList[index].toString());
 
-                Get.back();
-              },
+                      Get.back();
+                    }
+                  : null,
               leading: Icon(
                 Icons.check_circle_rounded,
                 color: Colors.red[200],

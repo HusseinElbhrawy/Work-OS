@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/views/screens/add_task.dart';
+import 'package:work_os/views/screens/all_workers.dart';
 import 'package:work_os/views/screens/home.dart';
 import 'package:work_os/views/widgets/custom_list_tile.dart';
 
@@ -49,7 +50,9 @@ class DrawerWidget extends StatelessWidget {
           ),
           CustomListTile(
             title: 'Register Workers',
-            onTap: () {},
+            onTap: () {
+              Get.offAll(() => const AllWorkersScreen());
+            },
             icon: Icons.workspaces_outline,
           ),
           CustomListTile(

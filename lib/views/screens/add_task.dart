@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:work_os/views/screens/home.dart';
 import 'package:work_os/views/widgets/drawer_widget.dart';
 
@@ -91,16 +92,27 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 AddTaskScreenCustomWidget(
                   textEditingController: _deadlineDateController,
                   onTap: () async {
-                    var value = await showDatePicker(
+                    showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime.now(),
                       lastDate: DateTime.now().add(const Duration(days: 365)),
+                    ).then((value) {
+                      setState(() {
+                        _deadlineDateController.text =
+                            '${value!.year}/${value.month}/${value.day}';
+                      });
+                    }).catchError(
+                      (error) {
+                        Get.snackbar(
+                          'Warning',
+                          'Please Select a Date',
+                          colorText: Colors.black,
+                          backgroundColor: Colors.red.shade300,
+                          onTap: (get) {},
+                        );
+                      },
                     );
-                    setState(() {
-                      _deadlineDateController.text =
-                          '${value!.year}/${value.month}/${value.day}';
-                    });
                   },
                   title: 'Deadline Date',
                   hint: '',
