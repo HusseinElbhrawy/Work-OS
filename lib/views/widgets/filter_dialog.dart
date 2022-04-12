@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Future<dynamic> buildFilterDialog(Size deviceSize,
-    {required List<String> tasksCategoryList}) {
+    {required List<String> tasksCategoryList,
+    TextEditingController? categoryController}) {
   return Get.dialog(
     AlertDialog(
       title: Text(
@@ -19,6 +22,13 @@ Future<dynamic> buildFilterDialog(Size deviceSize,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return ListTile(
+              onTap: () {
+                categoryController!.text = tasksCategoryList[index];
+
+                log(tasksCategoryList[index].toString());
+
+                Get.back();
+              },
               leading: Icon(
                 Icons.check_circle_rounded,
                 color: Colors.red[200],

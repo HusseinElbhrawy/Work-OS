@@ -7,7 +7,7 @@ import '../widgets/filter_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-  static final List<String> _tasksCategoryList = [
+  static final List<String> tasksCategoryList = [
     'Business',
     'Programming',
     'Information Technology',
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               buildFilterDialog(
                 deviceSize,
-                tasksCategoryList: _tasksCategoryList,
+                tasksCategoryList: tasksCategoryList,
               );
             },
             icon: Icon(

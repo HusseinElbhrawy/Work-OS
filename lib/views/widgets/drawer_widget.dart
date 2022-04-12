@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/utils/const/const.dart';
+import 'package:work_os/views/screens/add_task.dart';
+import 'package:work_os/views/screens/home.dart';
 import 'package:work_os/views/widgets/custom_list_tile.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -35,7 +37,9 @@ class DrawerWidget extends StatelessWidget {
           const SizedBox(height: 30),
           CustomListTile(
             title: 'All Tasks',
-            onTap: () {},
+            onTap: () {
+              Get.offAll(() => const HomeScreen());
+            },
             icon: Icons.task_outlined,
           ),
           CustomListTile(
@@ -50,7 +54,9 @@ class DrawerWidget extends StatelessWidget {
           ),
           CustomListTile(
             title: 'Add Tasks',
-            onTap: () {},
+            onTap: () {
+              Get.offAll(() => const AddTaskScreen());
+            },
             icon: Icons.add_task_outlined,
           ),
           const Divider(color: kDarkBlue),
