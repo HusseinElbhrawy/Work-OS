@@ -4,6 +4,7 @@ import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/views/screens/add_task.dart';
 import 'package:work_os/views/screens/all_workers.dart';
 import 'package:work_os/views/screens/home.dart';
+import 'package:work_os/views/screens/my_account.dart';
 import 'package:work_os/views/widgets/custom_list_tile.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -45,7 +46,9 @@ class DrawerWidget extends StatelessWidget {
           ),
           CustomListTile(
             title: 'My Account',
-            onTap: () {},
+            onTap: () {
+              Get.offAll(() => const MyAccountScreen());
+            },
             icon: Icons.settings_outlined,
           ),
           CustomListTile(
