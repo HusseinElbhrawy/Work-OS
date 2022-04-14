@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:work_os/views/screens/forget_password.dart';
-import 'package:work_os/views/screens/signup.dart';
-import 'package:work_os/views/widgets/bg_image.dart';
-import 'package:work_os/views/widgets/custom_auth_button.dart';
-import 'package:work_os/views/widgets/custom_text_form_field.dart';
+
+import '/views/screens/forget_password.dart';
+import '/views/screens/signup.dart';
+import '/views/widgets/bg_image.dart';
+import '/views/widgets/custom_auth_button.dart';
+import '/views/widgets/custom_text_form_field.dart';
+import '/views/widgets/switch_between_auth_mode.dart';
+import '/views/widgets/text_auth_title.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -58,34 +61,13 @@ class _LoginScreenState extends State<LoginScreen>
               child: ListView(
                 children: [
                   SizedBox(height: deviceSize.height / 15),
-                  Text(
-                    'Login',
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Don't have an account?",
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                              color: Colors.white,
-                            ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Get.off(() => const SignUpScreen());
-                        },
-                        child: Text(
-                          '\tSIGN UP',
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    color: Colors.blue,
-                                  ),
-                        ),
-                      )
-                    ],
+                  const TextAuthTitle(title: 'Login'),
+                  SwitchBetweenAuthMode(
+                    title1: "Don't have an account?",
+                    title2: '\tSIGN UP',
+                    onTap: () {
+                      Get.off(() => const SignUpScreen());
+                    },
                   ),
                   CustomTextFormFiled(
                     focusNode: _emailFocusNode,
@@ -135,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen>
                     alignment: AlignmentDirectional.centerEnd,
                     child: TextButton(
                       onPressed: () {
-                        Get.to(() => ForgetPassword());
+                        Get.to(() => const ForgetPassword());
                       },
                       child: const Text(
                         'Forget Password?',

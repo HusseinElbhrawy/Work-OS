@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               buildFilterDialog(
                 deviceSize,
-                tasksCategoryList: tasksCategoryList,
+                list: tasksCategoryList,
               );
             },
             icon: Icon(

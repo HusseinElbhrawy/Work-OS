@@ -3,10 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Future<dynamic> buildFilterDialog(Size deviceSize,
-    {required List<String> tasksCategoryList,
-    TextEditingController? categoryController,
-    bool isHomeScreen = false}) {
+Future<dynamic> buildFilterDialog(
+  Size deviceSize, {
+  required List<String> list,
+  TextEditingController? categoryController,
+  TextEditingController? companyPositionController,
+  bool isHomeScreen = false,
+}) {
   return Get.dialog(
     AlertDialog(
       title: Text(
@@ -19,24 +22,29 @@ Future<dynamic> buildFilterDialog(Size deviceSize,
         width: deviceSize.width / 1,
         child: ListView.builder(
           physics: const BouncingScrollPhysics(),
-          itemCount: tasksCategoryList.length,
+          itemCount: list.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return ListTile(
               onTap: isHomeScreen
                   ? () {
-                      categoryController!.text = tasksCategoryList[index];
+                      categoryController!.text = list[index];
 
-                      log(tasksCategoryList[index].toString());
+                      log(list[index].toString());
 
                       Get.back();
                     }
-                  : null,
+                  : () {
+                      companyPositionController!.text = list[index];
+                      log(list[index].toString());
+
+                      Get.back();
+                    },
               leading: Icon(
                 Icons.check_circle_rounded,
                 color: Colors.red[200],
               ),
-              title: Text(tasksCategoryList[index]),
+              title: Text(list[index]),
             );
           },
         ),

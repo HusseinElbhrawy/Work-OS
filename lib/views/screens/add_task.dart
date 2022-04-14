@@ -59,7 +59,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   onTap: () async {
                     buildFilterDialog(
                       deviceSize,
-                      tasksCategoryList: HomeScreen.tasksCategoryList,
+                      list: HomeScreen.tasksCategoryList,
                       categoryController: _taskCategoryController,
                     );
                   },

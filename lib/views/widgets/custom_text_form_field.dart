@@ -14,6 +14,8 @@ class CustomTextFormFiled extends StatelessWidget {
     required this.focusNode,
     required this.textInputAction,
     this.onEditComplete,
+    this.enable = true,
+    this.onTap,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -26,38 +28,45 @@ class CustomTextFormFiled extends StatelessWidget {
   final FocusNode focusNode;
   final TextInputAction textInputAction;
   final Function? onEditComplete;
+  final bool enable;
+  final Function? onTap;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      focusNode: focusNode,
-      textInputAction: textInputAction,
-      controller: controller,
-      validator: (value) => validator(value),
-      onEditingComplete: () => onEditComplete!(),
-      style: const TextStyle(color: Colors.white),
-      keyboardType: keyboardType,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        suffixIcon: suffixIcon != null
-            ? IconButton(
-                onPressed: () => suffixIconFunction!(),
-                icon: Icon(
-                  suffixIcon,
-                  color: Colors.white,
-                ),
-              )
-            : null,
-        labelText: labelText,
-        fillColor: Colors.white,
-        focusedBorder: buildUnderlineInputBorder(),
-        enabledBorder: buildUnderlineInputBorder(),
-        errorBorder: buildUnderlineInputBorder().copyWith(
-          borderSide: const BorderSide(
-            color: Colors.red,
+    return GestureDetector(
+      onTap: () => onTap!(),
+      child: TextFormField(
+        enabled: enable,
+        focusNode: focusNode,
+        textInputAction: textInputAction,
+        controller: controller,
+        validator: (value) => validator(value),
+        onEditingComplete: () => onEditComplete!(),
+        style: const TextStyle(color: Colors.white),
+        keyboardType: keyboardType,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          suffixIcon: suffixIcon != null
+              ? IconButton(
+                  onPressed: () => suffixIconFunction!(),
+                  icon: Icon(
+                    suffixIcon,
+                    color: Colors.white,
+                  ),
+                )
+              : null,
+          labelText: labelText,
+          fillColor: Colors.white,
+          focusedBorder: buildUnderlineInputBorder(),
+          enabledBorder: buildUnderlineInputBorder(),
+          disabledBorder: buildUnderlineInputBorder(),
+          errorBorder: buildUnderlineInputBorder().copyWith(
+            borderSide: const BorderSide(
+              color: Colors.red,
+            ),
           ),
-        ),
-        labelStyle: const TextStyle(
-          color: Colors.white,
+          labelStyle: const TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
     );

@@ -26,7 +26,7 @@ class AllWorkersScreen extends StatelessWidget {
             onPressed: () {
               buildFilterDialog(
                 deviceSize,
-                tasksCategoryList: HomeScreen.tasksCategoryList,
+                list: HomeScreen.tasksCategoryList,
               );
             },
             icon: Icon(

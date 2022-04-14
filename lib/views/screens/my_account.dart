@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:work_os/utils/const/const.dart';
-import 'package:work_os/views/widgets/custom_auth_button.dart';
-import 'package:work_os/views/widgets/drawer_widget.dart';
-import 'package:work_os/views/widgets/main_information_widget.dart';
-import 'package:work_os/views/widgets/profile_picture.dart';
-import 'package:work_os/views/widgets/social_button.dart';
+
+import '/utils/const/const.dart';
+import '/views/widgets/custom_auth_button.dart';
+import '/views/widgets/drawer_widget.dart';
+import '/views/widgets/main_information_widget.dart';
+import '/views/widgets/profile_picture.dart';
+import '/views/widgets/social_button.dart';
 
 class MyAccountScreen extends StatelessWidget {
   const MyAccountScreen({Key? key}) : super(key: key);

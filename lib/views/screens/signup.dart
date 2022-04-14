@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:work_os/views/screens/login.dart';
-import 'package:work_os/views/widgets/bg_image.dart';
-import 'package:work_os/views/widgets/custom_auth_button.dart';
-import 'package:work_os/views/widgets/custom_text_form_field.dart';
+import 'package:work_os/views/widgets/image_picker_widget.dart';
+
+import '/views/screens/login.dart';
+import '/views/widgets/bg_image.dart';
+import '/views/widgets/custom_auth_button.dart';
+import '/views/widgets/custom_text_form_field.dart';
+import '/views/widgets/filter_dialog.dart';
+import '/views/widgets/switch_between_auth_mode.dart';
+import '/views/widgets/text_auth_title.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -19,14 +24,27 @@ class _SignUpScreenState extends State<SignUpScreen>
   late Animation<double> animation;
   final _fullNameFocusNode = FocusNode(),
       _emailFocusNode = FocusNode(),
-      _companyPosition = FocusNode();
+      _companyPosition = FocusNode(),
+      _phoneNumber = FocusNode();
 
   final _passwordFocusNode = FocusNode();
 
   final emailController = TextEditingController(),
       passwordController = TextEditingController(),
       fullNameController = TextEditingController(),
-      companyPositionController = TextEditingController();
+      companyPositionController = TextEditingController(),
+      phoneController = TextEditingController();
+
+  final List<String> jobList = [
+    'Manager',
+    'Team Leader',
+    'Designer',
+    'Web Designer',
+    'Full Stack Developer',
+    'Mobile Developer',
+    'Marketing',
+    'Digital Marketing',
+  ];
 
   bool isObscureText = true;
   IconData iconData = Icons.visibility;
@@ -67,53 +85,40 @@ class _SignUpScreenState extends State<SignUpScreen>
                 child: ListView(
                   children: [
                     SizedBox(height: deviceSize.height / 15),
-                    Text(
-                      'Sign Up',
-                      style:
-                          Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                    const TextAuthTitle(title: 'Sign Up'),
+                    SwitchBetweenAuthMode(
+                      title1: "Already have an account?",
+                      title2: '\tSign In',
+                      onTap: () {
+                        Get.off(() => const LoginScreen());
+                      },
                     ),
                     Row(
                       children: [
-                        Text(
-                          "Already have an account?",
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Get.off(() => LoginScreen());
-                          },
-                          child: Text(
-                            '\tSign In',
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: Colors.blue,
-                                    ),
+                        Expanded(
+                          flex: 3,
+                          child: CustomTextFormFiled(
+                            focusNode: _fullNameFocusNode,
+                            textInputAction: TextInputAction.next,
+                            onEditComplete: () {
+                              _fullNameFocusNode.nextFocus();
+                            },
+                            obscureText: false,
+                            keyboardType: TextInputType.name,
+                            controller: fullNameController,
+                            validator: (value) {
+                              if (value!.length < 2 || value.isEmpty) {
+                                return 'This name is too short';
+                              }
+                              return null;
+                            },
+                            labelText: 'Full Name',
                           ),
-                        )
+                        ),
+                        Expanded(
+                          child: ImagePickerWidget(),
+                        ),
                       ],
-                    ),
-                    CustomTextFormFiled(
-                      focusNode: _fullNameFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onEditComplete: () {
-                        _fullNameFocusNode.nextFocus();
-                      },
-                      obscureText: false,
-                      keyboardType: TextInputType.name,
-                      controller: fullNameController,
-                      validator: (value) {
-                        if (value!.length < 2 || value.isEmpty) {
-                          return 'This name is too short';
-                        }
-                        return null;
-                      },
-                      labelText: 'Full Name',
                     ),
                     CustomTextFormFiled(
                       focusNode: _emailFocusNode,
@@ -138,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                       focusNode: _passwordFocusNode,
                       textInputAction: TextInputAction.next,
                       onEditComplete: () {
-                        FocusScope.of(context).requestFocus(_companyPosition);
+                        FocusScope.of(context).requestFocus(_phoneNumber);
                       },
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: isObscureText,
@@ -156,6 +161,28 @@ class _SignUpScreenState extends State<SignUpScreen>
                       suffixIconFunction: () => changePasswordSuffixIcon(),
                     ),
                     CustomTextFormFiled(
+                      textInputAction: TextInputAction.next,
+                      focusNode: _phoneNumber,
+                      obscureText: false,
+                      keyboardType: TextInputType.phone,
+                      controller: phoneController,
+                      validator: (value) {
+                        if (value!.isEmpty || value.length < 6) {
+                          return 'Not Valid';
+                        }
+                        return null;
+                      },
+                      labelText: 'phone Number',
+                    ),
+                    CustomTextFormFiled(
+                      onTap: () async {
+                        buildFilterDialog(
+                          deviceSize,
+                          list: jobList,
+                          companyPositionController: companyPositionController,
+                        );
+                      },
+                      enable: false,
                       textInputAction: TextInputAction.done,
                       focusNode: _companyPosition,
                       obscureText: false,
