@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/utils/const/const.dart';
-import 'package:work_os/views/screens/signup.dart';
+import 'package:work_os/views/screens/my_account.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +15,15 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Work OS',
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          color: kScaffoldBGColor,
+          elevation: 0.0,
+          iconTheme: IconThemeData(color: kDarkBlue),
+        ),
         scaffoldBackgroundColor: kScaffoldBGColor,
         primarySwatch: Colors.blue,
       ),
-      home: SignUpScreen(),
+      home: MyAccountScreen(),
     );
   }
 }

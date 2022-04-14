@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '/utils/const/const.dart';
 import '/views/widgets/custom_auth_button.dart';
@@ -12,6 +13,10 @@ class MyAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void openLink({required String url}) async {
+      if (!await launch(url)) throw "Error occurred couldn't open link";
+    }
+
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -74,18 +79,27 @@ class MyAccountScreen extends StatelessWidget {
                           children: [
                             SocialButton(
                               iconColor: Colors.green,
-                              iconData: Icons.message_outlined,
-                              onTap: () {},
+                              iconData: Icons.whatsapp_outlined,
+                              onTap: () {
+                                openLink(
+                                  url:
+                                      'https://wa.me/01069233929?text=HelloThere',
+                                );
+                              },
                             ),
                             SocialButton(
                               iconColor: Colors.red,
                               iconData: Icons.mail_outlined,
-                              onTap: () {},
+                              onTap: () {
+                                openLink(url: 'mailto:email@gmail.com');
+                              },
                             ),
                             SocialButton(
                               iconColor: Colors.purple,
                               iconData: Icons.call_outlined,
-                              onTap: () {},
+                              onTap: () {
+                                openLink(url: 'tel://01069233929');
+                              },
                             ),
                           ],
                         ),
