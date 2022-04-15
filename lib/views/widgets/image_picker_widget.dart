@@ -8,21 +8,20 @@ import '/views/widgets/custom_row.dart';
 
 class ImagePickerWidget extends StatelessWidget {
   const ImagePickerWidget({Key? key}) : super(key: key);
-  static final SignUpController signUpController = Get.find();
+  static final SignUpController signUpController = Get.put(SignUpController());
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        GetBuilder(
-          init: SignUpController(),
-          builder: (SignUpController controller) => Padding(
+        Obx(() {
+          return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               width: 80,
               height: 100,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: signUpController.pickedImage == null
+                child: signUpController.isFileImage.value == false
                     ? Image.asset(
                         'assets/images/man.png',
                       )
@@ -40,8 +39,8 @@ class ImagePickerWidget extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
         PositionedDirectional(
           top: 0.0,
           end: 0.0,

@@ -1,18 +1,21 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/views/screens/home.dart';
-import 'package:work_os/views/widgets/error_snackbar.dart';
+import 'package:work_os/views/widgets/error_snack_bar.dart';
 
 class SignUpController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
+  final isAnimation = true;
   late AnimationController controller;
   late Animation<double> animation;
   final fullNameFocusNode = FocusNode(),
@@ -28,11 +31,12 @@ class SignUpController extends GetxController
       companyPositionController = TextEditingController(),
       phoneController = TextEditingController();
 
+  RxBool isFileImage = false.obs;
   File? pickedImage;
-  final ImagePicker picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
 
   void pickedImageMethod({required ImageSource src}) async {
-    picker
+    _picker
         .pickImage(
       source: src,
       maxWidth: 1080,
@@ -67,12 +71,15 @@ class SignUpController extends GetxController
         .then((value) {
       if (value != null) {
         pickedImage = value;
-        update();
+        isFileImage.value = true;
+        // update();
       } else {
         Get.back();
+        isFileImage.value = false;
         throw 'Please Select an Image';
       }
     }).catchError((error) {
+      isFileImage.value = false;
       Get.snackbar(
         'Warning',
         error,
@@ -106,38 +113,70 @@ class SignUpController extends GetxController
     fullNameController.clear();
     phoneController.clear();
     companyPositionController.clear();
+    pickedImage = null;
+    isFileImage.value = false;
   }
 
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<void> createAccount({
     required String email,
     required String password,
   }) async {
-    isLoading = true;
-    try {
-      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email.trim(),
-        password: password.trim(),
-      );
-      isLoading = false;
-      clearControllers();
-      Get.off(() => const HomeScreen());
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        errorSnackBar('The password provided is too weak.');
-        log('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        errorSnackBar('The account already exists for that email.');
-        log('The account already exists for that email.');
+    isLoading.value = true;
+    if (pickedImage == null) {
+      errorSnackBar('Please Select Profile Image');
+      isLoading.value = false;
+    } else {
+      isLoading.value = true;
+      try {
+        final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email.trim(),
+          password: password.trim(),
+        );
+        await _saveDataInFirebaseFireStore(id: credential.user!.uid);
+        isLoading.value = false;
+        clearControllers();
+        Get.off(() => const HomeScreen());
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          errorSnackBar('The password provided is too weak.');
+          log('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          errorSnackBar('The account already exists for that email.');
+          log('The account already exists for that email.');
+        }
+        isLoading.value = false;
+      } catch (e) {
+        isLoading.value = false;
+        errorSnackBar(e.toString());
+        log(e.toString());
       }
-      isLoading = false;
-    } catch (e) {
-      isLoading = false;
-      errorSnackBar(e.toString());
-      log(e.toString());
     }
-    update();
+  }
+
+  Future<void> _saveDataInFirebaseFireStore({required String id}) async {
+    var instance = FirebaseFirestore.instance;
+
+    var value = await _uploadImage(uid: id);
+
+    await instance.collection('users').doc(id).set({
+      'Id': id,
+      'Name': fullNameController.text.trim(),
+      'Email': emailController.text.trim(),
+      'ImageUrl': await value.getDownloadURL(),
+      'PhoneNumber': phoneController.text.trim(),
+      'PositionInCompany': companyPositionController.text.trim(),
+      'CreatedAt': Timestamp.now(),
+    });
+  }
+
+  Future<Reference> _uploadImage({required String uid}) async {
+    final Reference _storage =
+        FirebaseStorage.instance.ref().child('UserImages').child(uid + '.jpg');
+    await _storage.putFile(pickedImage as File);
+
+    return _storage;
   }
 
   @override
@@ -153,15 +192,16 @@ class SignUpController extends GetxController
   void onClose() {
     log('On Closed Start');
     controller.dispose();
-    companyPositionController.dispose();
-    emailController.dispose();
+    // companyPositionController.dispose();
+    // emailController.dispose();
     fullNameController.dispose();
-    passwordController.dispose();
     fullNameFocusNode.dispose();
-    emailFocusNode.dispose();
-    companyPosition.dispose();
-    phoneNumber.dispose();
-    passwordFocusNode.dispose();
+    // passwordController.dispose();
+
+    // emailFocusNode.dispose();
+    // companyPosition.dispose();
+    // phoneNumber.dispose();
+    // passwordFocusNode.dispose();
     super.onClose();
     log('On Closed End');
   }
@@ -170,15 +210,16 @@ class SignUpController extends GetxController
   void dispose() {
     log('Disposed Start');
     controller.dispose();
-    companyPositionController.dispose();
-    emailController.dispose();
+    // companyPositionController.dispose();
+    // emailController.dispose();
     fullNameController.dispose();
-    passwordController.dispose();
     fullNameFocusNode.dispose();
-    emailFocusNode.dispose();
-    companyPosition.dispose();
-    phoneNumber.dispose();
-    passwordFocusNode.dispose();
+    // passwordController.dispose();
+
+    // emailFocusNode.dispose();
+    // companyPosition.dispose();
+    // phoneNumber.dispose();
+    // passwordFocusNode.dispose();
     super.dispose();
     log('Disposed End');
   }

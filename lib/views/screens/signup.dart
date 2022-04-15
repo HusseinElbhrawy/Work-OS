@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:work_os/controller/signup_controller.dart';
 
+import '/controller/signup_controller.dart';
 import '/views/screens/login.dart';
 import '/views/widgets/bg_image.dart';
 import '/views/widgets/custom_auth_button.dart';
@@ -13,46 +13,48 @@ import '/views/widgets/text_auth_title.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
+  static final SignUpController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
-
+    Get.lazyPut(() => SignUpController(), fenix: true);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(backgroundColor: Colors.transparent),
-      body: GetBuilder(
-        init: SignUpController(),
-        builder: (SignUpController controller) {
-          return Form(
-            key: controller.formKey,
-            child: Center(
-              child: Stack(
-                children: [
-                  AnimatedBuilder(
-                    animation: controller.controller,
-                    builder: (BuildContext context, Widget? child) {
-                      return BGImage(animation: controller.animation);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: ListView(
+      body: Form(
+        key: controller.formKey,
+        child: Center(
+          child: Stack(
+            children: [
+              GetBuilder(
+                builder: (SignUpController controller) => AnimatedBuilder(
+                  animation: controller.controller,
+                  builder: (BuildContext context, Widget? child) {
+                    return BGImage(animation: controller.animation);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView(
+                  children: [
+                    SizedBox(height: deviceSize.height / 15),
+                    const TextAuthTitle(title: 'Sign Up'),
+                    SwitchBetweenAuthMode(
+                      title1: "Already have an account?",
+                      title2: '\tSign In',
+                      onTap: () {
+                        Get.off(() => LoginScreen());
+                      },
+                    ),
+                    Row(
                       children: [
-                        SizedBox(height: deviceSize.height / 15),
-                        const TextAuthTitle(title: 'Sign Up'),
-                        SwitchBetweenAuthMode(
-                          title1: "Already have an account?",
-                          title2: '\tSign In',
-                          onTap: () {
-                            Get.off(() => LoginScreen());
-                          },
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: CustomTextFormFiled(
+                        Expanded(
+                          flex: 3,
+                          child: GetBuilder(
+                            builder: (SignUpController controller) {
+                              return CustomTextFormFiled(
                                 focusNode: controller.fullNameFocusNode,
                                 textInputAction: TextInputAction.next,
                                 onEditComplete: () {
@@ -68,12 +70,16 @@ class SignUpScreen extends StatelessWidget {
                                   return null;
                                 },
                                 labelText: 'Full Name',
-                              ),
-                            ),
-                            const Expanded(child: ImagePickerWidget()),
-                          ],
+                              );
+                            },
+                          ),
                         ),
-                        CustomTextFormFiled(
+                        const Expanded(child: ImagePickerWidget()),
+                      ],
+                    ),
+                    GetBuilder(
+                      builder: (SignUpController controller) {
+                        return CustomTextFormFiled(
                           focusNode: controller.emailFocusNode,
                           textInputAction: TextInputAction.next,
                           onEditComplete: () {
@@ -91,8 +97,12 @@ class SignUpScreen extends StatelessWidget {
                             return null;
                           },
                           labelText: 'Email',
-                        ),
-                        CustomTextFormFiled(
+                        );
+                      },
+                    ),
+                    GetBuilder(
+                      builder: (SignUpController controller) {
+                        return CustomTextFormFiled(
                           focusNode: controller.passwordFocusNode,
                           textInputAction: TextInputAction.next,
                           onEditComplete: () {
@@ -114,8 +124,20 @@ class SignUpScreen extends StatelessWidget {
                               : Icons.visibility_off,
                           suffixIconFunction: () =>
                               controller.changePasswordSuffixIcon(),
-                        ),
-                        CustomTextFormFiled(
+                        );
+                      },
+                    ),
+                    GetBuilder(
+                      builder: (SignUpController controller) {
+                        return CustomTextFormFiled(
+                          onEditComplete: () {
+                            buildFilterDialog(
+                              deviceSize,
+                              list: controller.jobList,
+                              companyPositionController:
+                                  controller.companyPositionController,
+                            );
+                          },
                           textInputAction: TextInputAction.next,
                           focusNode: controller.phoneNumber,
                           obscureText: false,
@@ -128,9 +150,13 @@ class SignUpScreen extends StatelessWidget {
                             return null;
                           },
                           labelText: 'phone Number',
-                        ),
-                        CustomTextFormFiled(
-                          onTap: () async {
+                        );
+                      },
+                    ),
+                    GetBuilder(
+                      builder: (SignUpController controller) {
+                        return CustomTextFormFiled(
+                          onTap: () {
                             buildFilterDialog(
                               deviceSize,
                               list: controller.jobList,
@@ -143,7 +169,13 @@ class SignUpScreen extends StatelessWidget {
                           focusNode: controller.companyPosition,
                           obscureText: false,
                           onEditComplete: () {
-                            print('Hello World ');
+                            FocusScope.of(context).unfocus();
+                            if (controller.formKey.currentState!.validate()) {
+                              controller.createAccount(
+                                email: controller.emailController.text,
+                                password: controller.passwordController.text,
+                              );
+                            }
                           },
                           keyboardType: TextInputType.text,
                           controller: controller.companyPositionController,
@@ -154,14 +186,17 @@ class SignUpScreen extends StatelessWidget {
                             return null;
                           },
                           labelText: 'Company Position',
-                        ),
-                        const SizedBox(height: 40),
-                        controller.isLoading
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 40),
+                    Obx(
+                      () {
+                        return controller.isLoading.value
                             ? const LinearProgressIndicator()
                             : CustomAuthButton(
                                 onTap: () {
                                   FocusScope.of(context).unfocus();
-                                  // Get.off(() => const HomeScreen());
                                   if (controller.formKey.currentState!
                                       .validate()) {
                                     controller.createAccount(
@@ -173,15 +208,15 @@ class SignUpScreen extends StatelessWidget {
                                 },
                                 title: 'Sign Up',
                                 icon: Icons.person_add,
-                              ),
-                      ],
+                              );
+                      },
                     ),
-                  )
-                ],
-              ),
-            ),
-          );
-        },
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
