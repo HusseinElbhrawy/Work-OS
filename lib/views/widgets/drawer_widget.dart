@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/utils/const/const.dart';
@@ -100,7 +103,15 @@ class DrawerWidget extends StatelessWidget {
                       child: const Text('Cancel'),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        log('Log Out Start');
+                        Get.back();
+                        await FirebaseAuth.instance.signOut().then((value) {
+                          log('Start');
+                          // Get.offAll(() => LoginScreen());
+                          log('End');
+                        });
+                      },
                       child: const Text(
                         'Log Out',
                         style: TextStyle(color: Colors.red),

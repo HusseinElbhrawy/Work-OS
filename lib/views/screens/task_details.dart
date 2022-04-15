@@ -65,16 +65,16 @@ class TaskDetailsScreen extends StatelessWidget {
                     const Divider(color: kDarkBlue),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const CustomText(title: 'Uploaded on:'),
-                        const CustomText(title: '2021-7-9'),
+                      children: const [
+                        CustomText(title: 'Uploaded on:'),
+                        CustomText(title: '2021-7-9'),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const CustomText(title: 'Deadline date:'),
-                        const CustomText(title: '2021-7-31'),
+                      children: const [
+                        CustomText(title: 'Deadline date:'),
+                        CustomText(title: '2021-7-31'),
                       ],
                     ),
                     const Divider(color: kDarkBlue),
@@ -199,7 +199,7 @@ class TaskDetailsScreen extends StatelessWidget {
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) =>
-                          Divider(thickness: 1.1),
+                          const Divider(thickness: 1.1),
                     )
                   ],
                 ),

@@ -18,9 +18,6 @@ class AllWorkersScreen extends StatelessWidget {
             color: Colors.pink.shade800,
           ),
         ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0.0,
-        iconTheme: const IconThemeData(color: kDarkBlue),
         actions: [
           IconButton(
             onPressed: () {
@@ -41,12 +38,12 @@ class AllWorkersScreen extends StatelessWidget {
         itemCount: 10,
         itemBuilder: (context, index) {
           return Card(
-            margin: EdgeInsetsDirectional.all(4),
+            margin: const EdgeInsetsDirectional.all(4),
             child: ListTile(
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               leading: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   border: BorderDirectional(
                     end: BorderSide(color: kDarkBlue, width: 2),
                   ),

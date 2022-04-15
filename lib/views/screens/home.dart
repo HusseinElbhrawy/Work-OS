@@ -23,9 +23,6 @@ class HomeScreen extends StatelessWidget {
       extendBodyBehindAppBar: false,
       drawer: const DrawerWidget(),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.grey.shade900),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0.0,
         title: Text(
           'Task',
           style: TextStyle(
@@ -39,6 +36,7 @@ class HomeScreen extends StatelessWidget {
               buildFilterDialog(
                 deviceSize,
                 list: tasksCategoryList,
+                isHomeScreen: true,
               );
             },
             icon: Icon(

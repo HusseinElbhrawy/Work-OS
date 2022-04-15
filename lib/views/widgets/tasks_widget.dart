@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_os/views/screens/task_details.dart';
 
 class TaskWidget extends StatelessWidget {
   const TaskWidget({
@@ -14,7 +15,9 @@ class TaskWidget extends StatelessWidget {
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        onTap: () {},
+        onTap: () {
+          Get.to(() => TaskDetailsScreen());
+        },
         onLongPress: () {
           Get.dialog(
             AlertDialog(
