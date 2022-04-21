@@ -63,9 +63,7 @@ class AddTaskScreen extends StatelessWidget {
                   AddTaskScreenCustomWidget(
                     textEditingController:
                         addTaskController.taskTitleController,
-                    onTap: () {
-                      print('Tapped');
-                    },
+                    onTap: () {},
                     title: 'Task Title',
                     hint: '',
                     maxLength: 100,
@@ -74,9 +72,7 @@ class AddTaskScreen extends StatelessWidget {
                   AddTaskScreenCustomWidget(
                     textEditingController:
                         addTaskController.taskDescriptionController,
-                    onTap: () {
-                      print('Tapped');
-                    },
+                    onTap: () {},
                     title: 'Task Description',
                     hint: '',
                     maxLength: 1000,
@@ -92,12 +88,24 @@ class AddTaskScreen extends StatelessWidget {
                     enabled: false,
                   ),
                   spaceBetweenWidget,
-                  CustomAuthButton(
-                    title: 'Upload',
-                    icon: Icons.upload,
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      if (addTaskController.formKey.currentState!.validate()) {}
+                  GetX(
+                    builder: (AddTaskController controller) {
+                      return controller.isTaskUploading.value
+                          ? const Center(
+                              child: LinearProgressIndicator(),
+                            )
+                          : CustomAuthButton(
+                              title: 'Upload',
+                              icon: Icons.upload,
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+
+                                if (addTaskController.formKey.currentState!
+                                    .validate()) {
+                                  controller.uploadTask();
+                                }
+                              },
+                            );
                     },
                   ),
                 ],

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_os/controller/home_controller.dart';
+import 'package:work_os/controller/task_details_controller.dart';
 import 'package:work_os/views/screens/task_details.dart';
 
 class TaskWidget extends StatelessWidget {
   const TaskWidget({
     Key? key,
+    required this.index,
+    required this.allData,
   }) : super(key: key);
-
+  final int index;
+  final Map allData;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -15,15 +20,19 @@ class TaskWidget extends StatelessWidget {
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        onTap: () {
-          Get.to(() => TaskDetailsScreen());
+        onTap: () async {
+          TaskDetailsController.initData(
+            id: allData['TaskID'],
+            uBy: allData['UploadedBy'],
+          );
+          Get.to(() => const TaskDetailsScreen());
         },
         onLongPress: () {
           Get.dialog(
             AlertDialog(
               content: TextButton.icon(
                 onPressed: () {
-                  //ToDo:Remove Task
+                  HomeController().deleteTask(id: allData['TaskID']);
                 },
                 icon: const Icon(Icons.delete),
                 label: const Text('Remove'),
@@ -47,8 +56,10 @@ class TaskWidget extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.transparent,
             child: Image.asset(
-              'assets/images/check.png',
-              color: Colors.green.shade200,
+              allData['IsDone']
+                  ? 'assets/images/check.png'
+                  : 'assets/images/clock.png',
+              color: allData['IsDone'] ? Colors.green.shade200 : null,
             ),
           ),
         ),
@@ -56,9 +67,9 @@ class TaskWidget extends StatelessWidget {
           onPressed: () {},
           icon: const Icon(Icons.keyboard_arrow_right),
         ),
-        title: const Text(
-          'Title',
-          style: TextStyle(
+        title: Text(
+          allData['TaskTitle'],
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),

@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/utils/const/const.dart';
@@ -50,7 +47,9 @@ class DrawerWidget extends StatelessWidget {
           CustomListTile(
             title: 'My Account',
             onTap: () {
-              Get.offAll(() => const MyAccountScreen());
+              Get.offAll(() => const MyAccountScreen(
+                    comeFromAllWorkerScreen: false,
+                  ));
             },
             icon: Icons.settings_outlined,
           ),
@@ -103,15 +102,7 @@ class DrawerWidget extends StatelessWidget {
                       child: const Text('Cancel'),
                     ),
                     TextButton(
-                      onPressed: () async {
-                        log('Log Out Start');
-                        Get.back();
-                        await FirebaseAuth.instance.signOut().then((value) {
-                          log('Start');
-                          // Get.offAll(() => LoginScreen());
-                          log('End');
-                        });
-                      },
+                      onPressed: () => logOut(),
                       child: const Text(
                         'Log Out',
                         style: TextStyle(color: Colors.red),

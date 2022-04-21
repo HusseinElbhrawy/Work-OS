@@ -9,13 +9,13 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:work_os/utils/const/const.dart';
+import 'package:work_os/utils/services/user_status.dart';
 import 'package:work_os/views/screens/home.dart';
-import 'package:work_os/views/widgets/error_snack_bar.dart';
+import 'package:work_os/views/widgets/snack_bar.dart';
 
 class SignUpController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
-  final isAnimation = true;
   late AnimationController controller;
   late Animation<double> animation;
   final fullNameFocusNode = FocusNode(),
@@ -31,36 +31,66 @@ class SignUpController extends GetxController
       companyPositionController = TextEditingController(),
       phoneController = TextEditingController();
 
-  RxBool isFileImage = false.obs;
   File? pickedImage;
   final ImagePicker _picker = ImagePicker();
 
   void pickedImageMethod({required ImageSource src}) async {
-    _picker
-        .pickImage(
-      source: src,
-      maxWidth: 1080,
-      maxHeight: 1080,
-    )
-        .then((value) async {
-      if (value != null) {
-        cropImage(value.path);
-        Get.back();
-      } else {
-        Get.back();
-        throw 'Please Select an Image';
-      }
-    }).catchError(
-      (error) {
-        log("User didn't picked image yet");
-        Get.snackbar(
-          'Warning',
-          error,
-          colorText: kDarkBlue,
-          backgroundColor: Colors.white,
-        );
-      },
-    );
+    if (pickedImage == null) {
+      _picker
+          .pickImage(
+        source: src,
+        maxWidth: 1080,
+        maxHeight: 1080,
+      )
+          .then((value) async {
+        if (value != null) {
+          cropImage(value.path);
+          Get.back();
+        } else {
+          Get.back();
+          throw 'Please Select an Image';
+        }
+      }).catchError(
+        (error) {
+          log("User didn't picked image yet");
+          Get.snackbar(
+            'Warning',
+            error,
+            colorText: kDarkBlue,
+            backgroundColor: Colors.white,
+          );
+          update();
+        },
+      );
+    } else {
+      pickedImage = null;
+      _picker
+          .pickImage(
+        source: src,
+        maxWidth: 1080,
+        maxHeight: 1080,
+      )
+          .then((value) async {
+        if (value != null) {
+          cropImage(value.path);
+          Get.back();
+        } else {
+          Get.back();
+          throw 'Please Select an Image';
+        }
+      }).catchError(
+        (error) {
+          log("User didn't picked image yet");
+          Get.snackbar(
+            'Warning',
+            error,
+            colorText: kDarkBlue,
+            backgroundColor: Colors.white,
+          );
+          update();
+        },
+      );
+    }
   }
 
   void cropImage(path) async {
@@ -71,22 +101,22 @@ class SignUpController extends GetxController
         .then((value) {
       if (value != null) {
         pickedImage = value;
-        isFileImage.value = true;
-        // update();
+        update();
       } else {
         Get.back();
-        isFileImage.value = false;
         throw 'Please Select an Image';
       }
-    }).catchError((error) {
-      isFileImage.value = false;
-      Get.snackbar(
-        'Warning',
-        error,
-        colorText: kDarkBlue,
-        backgroundColor: Colors.white,
-      );
-    });
+    }).catchError(
+      (error) {
+        Get.snackbar(
+          'Warning',
+          error,
+          colorText: kDarkBlue,
+          backgroundColor: Colors.white,
+        );
+        update();
+      },
+    );
   }
 
   final List<String> jobList = [
@@ -113,8 +143,8 @@ class SignUpController extends GetxController
     fullNameController.clear();
     phoneController.clear();
     companyPositionController.clear();
+    pickedImage!.delete();
     pickedImage = null;
-    isFileImage.value = false;
   }
 
   RxBool isLoading = false.obs;
@@ -129,6 +159,7 @@ class SignUpController extends GetxController
       isLoading.value = false;
     } else {
       isLoading.value = true;
+
       try {
         final credential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email.trim(),
@@ -137,6 +168,7 @@ class SignUpController extends GetxController
         await _saveDataInFirebaseFireStore(id: credential.user!.uid);
         isLoading.value = false;
         clearControllers();
+        UserStatus().saveToBox(true);
         Get.off(() => const HomeScreen());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -192,35 +224,38 @@ class SignUpController extends GetxController
   void onClose() {
     log('On Closed Start');
     controller.dispose();
-    // companyPositionController.dispose();
-    // emailController.dispose();
+    companyPositionController.dispose();
+    emailController.dispose();
     fullNameController.dispose();
+    passwordController.dispose();
+    //---
+    emailFocusNode.dispose();
     fullNameFocusNode.dispose();
-    // passwordController.dispose();
-
-    // emailFocusNode.dispose();
-    // companyPosition.dispose();
-    // phoneNumber.dispose();
-    // passwordFocusNode.dispose();
+    companyPosition.dispose();
+    phoneNumber.dispose();
+    passwordFocusNode.dispose();
+    // clearControllers();
     super.onClose();
     log('On Closed End');
   }
 
-  @override
-  void dispose() {
-    log('Disposed Start');
-    controller.dispose();
-    // companyPositionController.dispose();
-    // emailController.dispose();
-    fullNameController.dispose();
-    fullNameFocusNode.dispose();
-    // passwordController.dispose();
+  // @override
+  // void dispose() {
+  //   log('Disposed Start');
+  //   controller.dispose();
+  //   companyPositionController.dispose();
+  //   emailController.dispose();
+  //   fullNameController.dispose();
+  //   passwordController.dispose();
+  //   //---
+  //   emailFocusNode.dispose();
+  //   fullNameFocusNode.dispose();
+  //   companyPosition.dispose();
+  //   phoneNumber.dispose();
+  //   passwordFocusNode.dispose();
 
-    // emailFocusNode.dispose();
-    // companyPosition.dispose();
-    // phoneNumber.dispose();
-    // passwordFocusNode.dispose();
-    super.dispose();
-    log('Disposed End');
-  }
+  //   // clearControllers();
+  //   super.dispose();
+  //   log('Disposed End');
+  // }
 }

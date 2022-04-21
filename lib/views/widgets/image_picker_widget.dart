@@ -13,20 +13,20 @@ class ImagePickerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Obx(() {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GetBuilder(
+            builder: (SignUpController controller) => Container(
               width: 80,
               height: 100,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: signUpController.isFileImage.value == false
+                child: controller.pickedImage == null
                     ? Image.asset(
                         'assets/images/man.png',
                       )
                     : Image.file(
-                        signUpController.pickedImage!,
+                        controller.pickedImage!,
                         fit: BoxFit.cover,
                       ),
               ),
@@ -39,8 +39,8 @@ class ImagePickerWidget extends StatelessWidget {
                 ),
               ),
             ),
-          );
-        }),
+          ),
+        ),
         PositionedDirectional(
           top: 0.0,
           end: 0.0,

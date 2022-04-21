@@ -2,9 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/utils/const/const.dart';
-import 'package:work_os/utils/services/user_state.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:work_os/utils/services/user_status.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await GetStorage.init();
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -42,7 +49,9 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: kScaffoldBGColor,
             primarySwatch: Colors.blue,
           ),
-          home: UserState(),
+          home: UserStatus().page,
+          // home: const SplashScreen(),
+          // home: const MyAccountScreen(),
         );
       },
     );

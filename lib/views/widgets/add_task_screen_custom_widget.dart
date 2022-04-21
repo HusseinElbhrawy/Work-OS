@@ -28,9 +28,9 @@ class AddTaskScreenCustomWidget extends StatelessWidget {
                 color: Colors.pink.shade700,
               ),
         ),
-        InkWell(
+        GestureDetector(
           onTap: () => onTap(),
-          focusColor: Colors.transparent,
+          // focusColor: Colors.transparent,
           child: TextFormField(
             cursorColor: kDarkBlue,
             controller: textEditingController,
@@ -39,8 +39,8 @@ class AddTaskScreenCustomWidget extends StatelessWidget {
             maxLines: maxLines,
             maxLength: maxLength,
             validator: (newValue) {
-              if (newValue!.isEmpty) {
-                return 'Filed is missing';
+              if (newValue!.isEmpty || newValue.length < 7) {
+                return 'Filed is missing, This comment may less than 7 chars';
               }
               return null;
             },

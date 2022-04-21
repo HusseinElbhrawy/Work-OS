@@ -29,7 +29,6 @@ Future<dynamic> buildFilterDialog(
               onTap: isHomeScreen
                   ? () {
                       categoryController!.text = list[index];
-
                       log(list[index].toString());
 
                       Get.back();

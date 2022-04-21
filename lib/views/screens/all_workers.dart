@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:work_os/controller/all_worker_controller.dart';
+import 'package:work_os/controller/my_account_controller.dart';
 import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/views/screens/home.dart';
+import 'package:work_os/views/screens/my_account.dart';
 import 'package:work_os/views/widgets/drawer_widget.dart';
 import 'package:work_os/views/widgets/filter_dialog.dart';
 
@@ -9,6 +13,7 @@ class AllWorkersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(AllWorkersController(), permanent: true);
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -34,61 +39,100 @@ class AllWorkersScreen extends StatelessWidget {
         ],
       ),
       drawer: const DrawerWidget(),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Card(
-            margin: const EdgeInsetsDirectional.all(4),
-            child: ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              leading: Container(
-                decoration: const BoxDecoration(
-                  border: BorderDirectional(
-                    end: BorderSide(color: kDarkBlue, width: 2),
-                  ),
-                ),
-                child: Container(
-                  margin: const EdgeInsetsDirectional.only(end: 10),
-                  child: Image.asset(
-                    'assets/images/man.png',
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.blueAccent.shade100,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              title: Text(
-                'Name',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                      color: kDarkBlue,
-                      fontWeight: FontWeight.bold,
+      body: GetX(
+        builder: (AllWorkersController controller) {
+          if (controller.isloading.value) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: controller.allWorkers.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  margin: const EdgeInsetsDirectional.all(4),
+                  child: ListTile(
+                    onTap: () {
+                      Get.to(
+                        () => MyAccountScreen(
+                          comeFromAllWorkerScreen: true,
+                          date: controller.allWorkers[index]['CreatedAt'],
+                          email: controller.allWorkers[index]['Email'],
+                          name: controller.allWorkers[index]['Name'],
+                          phoneNumber: controller.allWorkers[index]
+                              ['PhoneNumber'],
+                          postionInCompany: controller.allWorkers[index]
+                              ['PositionInCompany'],
+                          id: controller.allWorkers[index]['Id'],
+                          imageURl: controller.allWorkers[index]['ImageUrl'],
+                        ),
+                      );
+                    },
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 20,
                     ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.linear_scale,
-                    color: Colors.pink.shade800,
+                    leading: Container(
+                      decoration: const BoxDecoration(
+                        border: BorderDirectional(
+                          end: BorderSide(color: kDarkBlue, width: 2),
+                        ),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsetsDirectional.only(end: 10),
+                        child: Image.network(
+                          controller.allWorkers[index]['ImageUrl'],
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent.shade100,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      controller.allWorkers[index]['Name'],
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                            color: kDarkBlue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.linear_scale,
+                          color: Colors.pink.shade800,
+                        ),
+                        Text(
+                          controller.allWorkers[index]['PositionInCompany'],
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    trailing:
+                        controller.allWorkers[index]['Id'] == kCurrentUserUid
+                            ? const SizedBox.shrink()
+                            : IconButton(
+                                onPressed: () {
+                                  MyAccountController().openLink(
+                                      url:
+                                          'mailto:${controller.allWorkers[index]['Email']}');
+                                },
+                                icon: Icon(
+                                  Icons.mail_outlined,
+                                  size: 30,
+                                  color: Colors.pink[800],
+                                ),
+                              ),
                   ),
-                  const Text(
-                    'SubTitle / Description',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-              trailing: Icon(
-                Icons.mail_outlined,
-                size: 30,
-                color: Colors.pink[800],
-              ),
-            ),
-          );
+                );
+              },
+            );
+          }
         },
       ),
     );

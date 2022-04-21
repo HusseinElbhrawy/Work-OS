@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_os/utils/services/user_status.dart';
+import 'package:work_os/views/screens/home.dart';
 
-import '/views/widgets/error_snack_bar.dart';
+import '../views/widgets/snack_bar.dart';
 
 class LoginController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -41,22 +43,23 @@ class LoginController extends GetxController
     passwordController.clear();
   }
 
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<void> loginAccount({
     required String email,
     required String password,
   }) async {
-    isLoading = true;
+    isLoading.value = true;
     try {
       final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
       log(credential.user!.uid);
-      isLoading = false;
+      isLoading.value = false;
       clearControllers();
-      // Get.off(() => const HomeScreen());
+      UserStatus().saveToBox(true);
+      Get.offAll(() => const HomeScreen());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         errorSnackBar('No user found for that email.');
@@ -65,13 +68,12 @@ class LoginController extends GetxController
         errorSnackBar('Wrong password provided for that user.');
         log('Wrong password provided for that user.');
       }
-      isLoading = false;
+      isLoading.value = false;
     } catch (e) {
-      isLoading = false;
+      isLoading.value = false;
       errorSnackBar(e.toString());
       log(e.toString());
     }
-    update();
   }
 
   @override

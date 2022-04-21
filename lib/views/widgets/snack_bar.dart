@@ -9,3 +9,12 @@ SnackbarController errorSnackBar(String errorMessage) {
     backgroundColor: Colors.red.shade200,
   );
 }
+
+SnackbarController successsSnackBar(String message) {
+  return Get.snackbar(
+    'Success✅',
+    message,
+    colorText: Colors.black,
+    backgroundColor: Colors.green.shade200,
+  );
+}
