@@ -345,8 +345,3 @@ class CustomText extends StatelessWidget {
     );
   }
 }
-/*
-controller.currentTaskData
-                                      .data()!['CreatedAt']
-                                      .toDate()
-                                      .isBefore(DateTime.now())*/
