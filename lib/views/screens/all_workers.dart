@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/controller/all_worker_controller.dart';
+import 'package:work_os/controller/home_controller.dart';
 import 'package:work_os/controller/my_account_controller.dart';
 import 'package:work_os/utils/const/const.dart';
-import 'package:work_os/views/screens/home.dart';
 import 'package:work_os/views/screens/my_account.dart';
 import 'package:work_os/views/widgets/drawer_widget.dart';
-import 'package:work_os/views/widgets/filter_dialog.dart';
+import 'package:work_os/views/widgets/custom_dialog.dart';
 
 class AllWorkersScreen extends StatelessWidget {
   const AllWorkersScreen({Key? key}) : super(key: key);
@@ -14,6 +14,7 @@ class AllWorkersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(AllWorkersController(), permanent: true);
+    final HomeController homeController = Get.find();
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -26,9 +27,9 @@ class AllWorkersScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              buildFilterDialog(
+              customDialog(
                 deviceSize,
-                list: HomeScreen.tasksCategoryList,
+                list: homeController.tasksCategoryList,
               );
             },
             icon: Icon(

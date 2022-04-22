@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/views/widgets/snack_bar.dart';
 
@@ -37,6 +38,68 @@ class HomeController extends GetxController {
     } else {
       errorSnackBar('You can\'t delete this task!');
     }
+  }
+
+  String? filterdValue;
+  final List<String> tasksCategoryList = [
+    'Business',
+    'Programming',
+    'Information Technology',
+    'Human Resources',
+    'Marketing',
+    'Design',
+    'Accounting',
+  ];
+  Future<void> showfilterDialog() async {
+    return Get.dialog(
+      AlertDialog(
+        title: Text(
+          'Task Category',
+          style: TextStyle(
+            color: Colors.pink.shade600,
+          ),
+        ),
+        content: SizedBox(
+          width: Get.size.width / 1,
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: tasksCategoryList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return ListTile(
+                onTap: () {
+                  filterdValue = tasksCategoryList[index];
+                  update();
+
+                  Get.back();
+                },
+                leading: Icon(
+                  Icons.check_circle_rounded,
+                  color: Colors.red[200],
+                ),
+                title: Text(tasksCategoryList[index]),
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('Closed'),
+          ),
+          TextButton(
+            onPressed: () {
+              filterdValue = null;
+              update();
+              Get.back();
+            },
+            child: const Text('Cancel Filter'),
+          ),
+        ],
+      ),
+    );
   }
 
   List filterTasks(

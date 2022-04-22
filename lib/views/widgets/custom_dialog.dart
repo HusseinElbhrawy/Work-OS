@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Future<dynamic> buildFilterDialog(
+Future<dynamic> customDialog(
   Size deviceSize, {
   required List<String> list,
   TextEditingController? categoryController,

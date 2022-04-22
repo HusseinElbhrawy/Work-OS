@@ -81,11 +81,11 @@ class TaskWidget extends StatelessWidget {
               Icons.linear_scale,
               color: Colors.pink.shade800,
             ),
-            const Text(
-              'SubTitle / Description',
+            Text(
+              allData['TaskCategory'],
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),

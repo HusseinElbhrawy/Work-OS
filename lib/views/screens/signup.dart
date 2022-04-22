@@ -6,7 +6,7 @@ import '/views/screens/login.dart';
 import '/views/widgets/bg_image.dart';
 import '/views/widgets/custom_auth_button.dart';
 import '/views/widgets/custom_text_form_field.dart';
-import '/views/widgets/filter_dialog.dart';
+import '../widgets/custom_dialog.dart';
 import '/views/widgets/image_picker_widget.dart';
 import '/views/widgets/switch_between_auth_mode.dart';
 import '/views/widgets/text_auth_title.dart';
@@ -117,7 +117,7 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         CustomTextFormFiled(
                           onEditComplete: () {
-                            buildFilterDialog(
+                            customDialog(
                               deviceSize,
                               list: controller.jobList,
                               companyPositionController:
@@ -139,7 +139,7 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         CustomTextFormFiled(
                           onTap: () {
-                            buildFilterDialog(
+                            customDialog(
                               deviceSize,
                               list: controller.jobList,
                               companyPositionController:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:work_os/views/screens/home.dart';
-import 'package:work_os/views/widgets/filter_dialog.dart';
+import 'package:work_os/controller/home_controller.dart';
+import 'package:work_os/views/widgets/custom_dialog.dart';
 
 import '/controller/add_task_controller.dart';
 import '/utils/const/const.dart';
@@ -16,6 +16,7 @@ class AddTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
     var spaceBetweenWidget = SizedBox(height: deviceSize.height / 30);
+    final HomeController homeController = Get.find();
     return Scaffold(
       appBar: AppBar(),
       drawer: const DrawerWidget(),
@@ -46,9 +47,9 @@ class AddTaskScreen extends StatelessWidget {
                       textEditingController:
                           addTaskController.taskCategoryController,
                       onTap: () {
-                        buildFilterDialog(
+                        customDialog(
                           deviceSize,
-                          list: HomeScreen.tasksCategoryList,
+                          list: homeController.tasksCategoryList,
                           categoryController:
                               addTaskController.taskCategoryController,
                           isHomeScreen: true,
