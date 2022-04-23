@@ -12,7 +12,12 @@ class ForgetPassword extends StatelessWidget {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(backgroundColor: Colors.transparent),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+      ),
       body: GetBuilder(
         init: ForgetController(),
         builder: (ForgetController controller) {
@@ -29,7 +34,7 @@ class ForgetPassword extends StatelessWidget {
                 child: ListView(
                   children: [
                     Text(
-                      'Forget Password',
+                      'forget_password'.tr,
                       style:
                           Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: Colors.white,
@@ -38,7 +43,7 @@ class ForgetPassword extends StatelessWidget {
                     ),
                     const Divider(color: Colors.transparent),
                     Text(
-                      'Email address',
+                      'email'.tr,
                       style: Theme.of(context).textTheme.headline6!.copyWith(
                             color: Colors.white,
                           ),
@@ -63,7 +68,7 @@ class ForgetPassword extends StatelessWidget {
                     ),
                     const Divider(color: Colors.transparent),
                     CustomAuthButton(
-                      title: 'Reset Password',
+                      title: 'reset_password'.tr,
                       icon: Icons.add,
                       onTap: () {},
                       isResetPassword: true,

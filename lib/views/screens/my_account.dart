@@ -80,18 +80,18 @@ class MyAccountScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const MainInformationWidget(
-                              title1: 'Contact Info👇',
+                            MainInformationWidget(
+                              title1: 'contact_info'.tr,
                               title2: '',
                             ),
                             MainInformationWidget(
-                              title1: 'Email',
+                              title1: 'email'.tr,
                               title2: comeFromAllWorkerScreen
                                   ? email.toString()
                                   : controller.email.toString(),
                             ),
                             MainInformationWidget(
-                              title1: 'Phone Number',
+                              title1: 'phone_number'.tr,
                               title2: comeFromAllWorkerScreen
                                   ? phoneNumber.toString()
                                   : controller.phoneNumber,
@@ -157,7 +157,7 @@ class MyAccountScreen extends StatelessWidget {
                                       horizontal: 25,
                                     ),
                                     child: CustomAuthButton(
-                                      title: 'Sign Out',
+                                      title: 'log_out'.tr,
                                       icon: Icons.exit_to_app_outlined,
                                       onTap: () => logOut(),
                                     ),

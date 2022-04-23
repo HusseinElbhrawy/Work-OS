@@ -36,12 +36,21 @@ class HomeController extends GetxController {
         value.data()!['UploadedBy'].toString()) {
       await FirebaseFirestore.instance.collection('tasks').doc(id).delete();
     } else {
-      errorSnackBar('You can\'t delete this task!');
+      errorSnackBar('you_can_not_delete_this_task'.tr);
     }
   }
 
-  String? filterdValue;
-  final List<String> tasksCategoryList = [
+  String? filterdValue1;
+  // final List<String> tasksCategoryList = [
+  //   'business'.tr,
+  //   'programming'.tr,
+  //   'information_technology'.tr,
+  //   'human_resources'.tr,
+  //   'marketing'.tr,
+  //   'design'.tr,
+  //   'accounting'.tr,
+  // ];
+  final List<String> tasksCategoryListToFilterd = [
     'Business',
     'Programming',
     'Information Technology',
@@ -50,11 +59,13 @@ class HomeController extends GetxController {
     'Design',
     'Accounting',
   ];
+
+  List x = [];
   Future<void> showfilterDialog() async {
     return Get.dialog(
       AlertDialog(
         title: Text(
-          'Task Category',
+          'task_category'.tr,
           style: TextStyle(
             color: Colors.pink.shade600,
           ),
@@ -63,12 +74,14 @@ class HomeController extends GetxController {
           width: Get.size.width / 1,
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemCount: tasksCategoryList.length,
+            itemCount: tasksCategoryListToFilterd.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return ListTile(
                 onTap: () {
-                  filterdValue = tasksCategoryList[index];
+                  filterdValue1 = tasksCategoryListToFilterd[index];
+
+                  log(filterdValue1.toString());
                   update();
 
                   Get.back();
@@ -77,7 +90,7 @@ class HomeController extends GetxController {
                   Icons.check_circle_rounded,
                   color: Colors.red[200],
                 ),
-                title: Text(tasksCategoryList[index]),
+                title: Text(tasksCategoryListToFilterd[index]),
               );
             },
           ),
@@ -87,33 +100,18 @@ class HomeController extends GetxController {
             onPressed: () {
               Get.back();
             },
-            child: const Text('Closed'),
+            child: Text('cancel'.tr),
           ),
           TextButton(
             onPressed: () {
-              filterdValue = null;
+              filterdValue1 = null;
               update();
               Get.back();
             },
-            child: const Text('Cancel Filter'),
+            child: Text('cancel_filter'.tr),
           ),
         ],
       ),
     );
   }
-
-  List filterTasks(
-      {required String type, required Map<String, dynamic> allData}) {
-    return allData.entries
-        .where(
-          (element) => element.value == type,
-        )
-        .toList();
-  }
-
-  // @override
-  // void onInit() {
-  //   getAllTasks();
-  //   super.onInit();
-  // }
 }

@@ -22,9 +22,7 @@ class ImagePickerWidget extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: controller.pickedImage == null
-                    ? Image.asset(
-                        'assets/images/man.png',
-                      )
+                    ? Image.asset('assets/images/man.png')
                     : Image.file(
                         controller.pickedImage!,
                         fit: BoxFit.cover,
@@ -48,9 +46,9 @@ class ImagePickerWidget extends StatelessWidget {
             onTap: () {
               Get.dialog(
                 AlertDialog(
-                  title: const Text(
-                    'Please Choose an Option',
-                    style: TextStyle(color: kDarkBlue),
+                  title: Text(
+                    'Please_choose_an_image'.tr,
+                    style: const TextStyle(color: kDarkBlue),
                   ),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -61,7 +59,7 @@ class ImagePickerWidget extends StatelessWidget {
                           signUpController.pickedImageMethod(
                               src: ImageSource.camera);
                         },
-                        title: 'Camera',
+                        title: 'camera'.tr,
                         icon: Icons.camera_outlined,
                       ),
                       CustomRow(
@@ -69,7 +67,7 @@ class ImagePickerWidget extends StatelessWidget {
                           signUpController.pickedImageMethod(
                               src: ImageSource.gallery);
                         },
-                        title: 'Gallery',
+                        title: 'gallery'.tr,
                         icon: Icons.image_outlined,
                       ),
                     ],

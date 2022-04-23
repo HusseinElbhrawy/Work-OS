@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:work_os/utils/const/const.dart';
-import 'package:work_os/utils/services/user_status.dart';
+import 'package:work_os/utils/localization/local.dart';
+import 'package:work_os/utils/localization/local_controller.dart';
+import '/utils/binding/my_binding.dart';
+import '/utils/const/const.dart';
+import '/utils/services/user_status.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LocalizationController langConroller =
+        Get.put(LocalizationController());
     return GetMaterialApp(
+      initialBinding: MyBinding(),
+      locale: langConroller.initialLang,
+      translations: MyLocalization(),
       title: 'Work OS',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
@@ -54,7 +62,8 @@ class MyApp extends StatelessWidget {
         ),
         imageSrc: "assets/images/working.png",
         text: "Work OS",
-        textType: TextType.TyperAnimatedText,
+        // text: 'نظام تشغيل العمل',
+        textType: TextType.ColorizeAnimationText,
         textStyle: Theme.of(context)
             .textTheme
             .headlineLarge!

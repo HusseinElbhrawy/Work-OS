@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 SnackbarController errorSnackBar(String errorMessage) {
   return Get.snackbar(
-    'Error',
+    'something_error'.tr,
     errorMessage,
     colorText: Colors.black,
     backgroundColor: Colors.red.shade200,
@@ -12,7 +12,7 @@ SnackbarController errorSnackBar(String errorMessage) {
 
 SnackbarController successsSnackBar(String message) {
   return Get.snackbar(
-    'Success✅',
+    'success'.tr,
     message,
     colorText: Colors.black,
     backgroundColor: Colors.green.shade200,

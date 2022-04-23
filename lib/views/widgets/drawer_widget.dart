@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:work_os/utils/const/const.dart';
+import 'package:work_os/utils/localization/local_controller.dart';
 import 'package:work_os/views/screens/add_task.dart';
 import 'package:work_os/views/screens/all_workers.dart';
 import 'package:work_os/views/screens/home.dart';
@@ -14,6 +16,8 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationController localizatationController = Get.find();
+
     return Drawer(
       child: Column(
         children: [
@@ -38,14 +42,14 @@ class DrawerWidget extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           CustomListTile(
-            title: 'All Tasks',
+            title: 'all_tasks'.tr,
             onTap: () {
               Get.offAll(() => const HomeScreen());
             },
             icon: Icons.task_outlined,
           ),
           CustomListTile(
-            title: 'My Account',
+            title: 'my_account'.tr,
             onTap: () {
               Get.offAll(() => const MyAccountScreen(
                     comeFromAllWorkerScreen: false,
@@ -54,22 +58,48 @@ class DrawerWidget extends StatelessWidget {
             icon: Icons.settings_outlined,
           ),
           CustomListTile(
-            title: 'Register Workers',
+            title: 'register_workers'.tr,
             onTap: () {
               Get.offAll(() => const AllWorkersScreen());
             },
             icon: Icons.workspaces_outline,
           ),
           CustomListTile(
-            title: 'Add Tasks',
+            title: 'add_task'.tr,
             onTap: () {
               Get.offAll(() => const AddTaskScreen());
             },
             icon: Icons.add_task_outlined,
           ),
+          GetBuilder(
+            builder: (LocalizationController controller) {
+              return ListTileSwitch(
+                value: LocalizationController.isArabic,
+                leading: const Icon(
+                  Icons.language_outlined,
+                  color: kDarkBlue,
+                ),
+                onChanged: (value) {
+                  localizatationController.changeLanguage(
+                    langKey: value == true ? 'ar' : 'en',
+                    newValue: value,
+                  );
+                },
+                switchType: SwitchType.custom,
+                switchActiveColor: Colors.indigo,
+                title: Text(
+                  'change_lan'.tr,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: kDarkBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              );
+            },
+          ),
           const Divider(color: kDarkBlue),
           CustomListTile(
-            title: 'Logout',
+            title: 'log_out'.tr,
             onTap: () {
               Get.dialog(
                 AlertDialog(
@@ -81,7 +111,7 @@ class DrawerWidget extends StatelessWidget {
                       ),
                       const VerticalDivider(color: Colors.transparent),
                       Text(
-                        'Sign Out',
+                        'log_out'.tr,
                         style: Theme.of(context).textTheme.headline6!.copyWith(
                               color: kDarkBlue,
                             ),
@@ -89,7 +119,7 @@ class DrawerWidget extends StatelessWidget {
                     ],
                   ),
                   content: Text(
-                    'Do you wanna Sign Out?',
+                    'do_you_want_sign_out'.tr,
                     style: Theme.of(context).textTheme.headline6!.copyWith(
                           color: kDarkBlue,
                         ),
@@ -99,13 +129,13 @@ class DrawerWidget extends StatelessWidget {
                       onPressed: () {
                         Get.back();
                       },
-                      child: const Text('Cancel'),
+                      child: Text('cancel2'.tr),
                     ),
                     TextButton(
                       onPressed: () => logOut(),
-                      child: const Text(
-                        'Log Out',
-                        style: TextStyle(color: Colors.red),
+                      child: Text(
+                        'log_out'.tr,
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                   ],

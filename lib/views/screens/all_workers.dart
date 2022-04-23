@@ -19,7 +19,7 @@ class AllWorkersScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'All Workers',
+          'all_workers'.tr,
           style: TextStyle(
             color: Colors.pink.shade800,
           ),
@@ -29,7 +29,7 @@ class AllWorkersScreen extends StatelessWidget {
             onPressed: () {
               customDialog(
                 deviceSize,
-                list: homeController.tasksCategoryList,
+                list: homeController.tasksCategoryListToFilterd,
               );
             },
             icon: Icon(
@@ -51,71 +51,76 @@ class AllWorkersScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: controller.allWorkers.length,
               itemBuilder: (context, index) {
-                return Card(
-                  margin: const EdgeInsetsDirectional.all(4),
-                  child: ListTile(
-                    onTap: () {
-                      Get.to(
-                        () => MyAccountScreen(
-                          comeFromAllWorkerScreen: true,
-                          date: controller.allWorkers[index]['CreatedAt'],
-                          email: controller.allWorkers[index]['Email'],
-                          name: controller.allWorkers[index]['Name'],
-                          phoneNumber: controller.allWorkers[index]
-                              ['PhoneNumber'],
-                          postionInCompany: controller.allWorkers[index]
-                              ['PositionInCompany'],
-                          id: controller.allWorkers[index]['Id'],
-                          imageURl: controller.allWorkers[index]['ImageUrl'],
+                return Builder(builder: (context) {
+                  return Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Card(
+                      margin: const EdgeInsetsDirectional.all(4),
+                      child: ListTile(
+                        onTap: () {
+                          Get.to(
+                            () => MyAccountScreen(
+                              comeFromAllWorkerScreen: true,
+                              date: controller.allWorkers[index]['CreatedAt'],
+                              email: controller.allWorkers[index]['Email'],
+                              name: controller.allWorkers[index]['Name'],
+                              phoneNumber: controller.allWorkers[index]
+                                  ['PhoneNumber'],
+                              postionInCompany: controller.allWorkers[index]
+                                  ['PositionInCompany'],
+                              id: controller.allWorkers[index]['Id'],
+                              imageURl: controller.allWorkers[index]
+                                  ['ImageUrl'],
+                            ),
+                          );
+                        },
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 20,
                         ),
-                      );
-                    },
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 20,
-                    ),
-                    leading: Container(
-                      decoration: const BoxDecoration(
-                        border: BorderDirectional(
-                          end: BorderSide(color: kDarkBlue, width: 2),
-                        ),
-                      ),
-                      child: Container(
-                        margin: const EdgeInsetsDirectional.only(end: 10),
-                        child: Image.network(
-                          controller.allWorkers[index]['ImageUrl'],
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.blueAccent.shade100,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      controller.allWorkers[index]['Name'],
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
-                            color: kDarkBlue,
-                            fontWeight: FontWeight.bold,
+                        leading: Container(
+                          decoration: const BoxDecoration(
+                            border: BorderDirectional(
+                              end: BorderSide(color: kDarkBlue, width: 2),
+                            ),
                           ),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.linear_scale,
-                          color: Colors.pink.shade800,
+                          child: Container(
+                            margin: const EdgeInsetsDirectional.only(end: 10),
+                            child: Image.network(
+                              controller.allWorkers[index]['ImageUrl'],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent.shade100,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                         ),
-                        Text(
-                          controller.allWorkers[index]['PositionInCompany'],
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 16),
+                        title: Text(
+                          controller.allWorkers[index]['Name'],
+                          style:
+                              Theme.of(context).textTheme.headline6!.copyWith(
+                                    color: kDarkBlue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
-                      ],
-                    ),
-                    trailing:
-                        controller.allWorkers[index]['Id'] == kCurrentUserUid
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.linear_scale,
+                              color: Colors.pink.shade800,
+                            ),
+                            Text(
+                              controller.allWorkers[index]['PositionInCompany'],
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        trailing: controller.allWorkers[index]['Id'] ==
+                                kCurrentUserUid
                             ? const SizedBox.shrink()
                             : IconButton(
                                 onPressed: () {
@@ -129,8 +134,10 @@ class AllWorkersScreen extends StatelessWidget {
                                   color: Colors.pink[800],
                                 ),
                               ),
-                  ),
-                );
+                      ),
+                    ),
+                  );
+                });
               },
             );
           }

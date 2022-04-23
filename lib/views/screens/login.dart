@@ -38,10 +38,10 @@ class LoginScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     SizedBox(height: deviceSize.height / 15),
-                    const TextAuthTitle(title: 'Login'),
+                    TextAuthTitle(title: 'login'.tr),
                     SwitchBetweenAuthMode(
-                      title1: "Don't have an account?",
-                      title2: '\tSIGN UP',
+                      title1: "don't_have_an_account".tr,
+                      title2: 'sign_up'.tr,
                       onTap: () {
                         Get.off(() => const SignUpScreen());
                       },
@@ -59,11 +59,11 @@ class LoginScreen extends StatelessWidget {
                         if (!value!.contains('@') ||
                             value.isEmpty ||
                             !value.contains('.')) {
-                          return 'This email is not valid';
+                          return 'this_email_is_not_valid'.tr;
                         }
                         return null;
                       },
-                      labelText: 'Email',
+                      labelText: 'email'.tr,
                     ),
                     CustomTextFormFiled(
                       onEditComplete: () {
@@ -82,11 +82,11 @@ class LoginScreen extends StatelessWidget {
                       controller: controller.passwordController,
                       validator: (value) {
                         if (value!.isEmpty || value.length < 7) {
-                          return 'This password is short password , it should at least 7 letters';
+                          return 'password_message_wrong'.tr;
                         }
                         return null;
                       },
-                      labelText: 'Password',
+                      labelText: 'password'.tr,
                       suffixIcon: controller.isObscureText
                           ? Icons.visibility
                           : Icons.visibility_off,
@@ -98,9 +98,9 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () {
                           Get.to(() => const ForgetPassword());
                         },
-                        child: const Text(
-                          'Forget Password?',
-                          style: TextStyle(
+                        child: Text(
+                          'forget_password'.tr,
+                          style: const TextStyle(
                             fontStyle: FontStyle.italic,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class LoginScreen extends StatelessWidget {
                                 );
                               }
                             },
-                            title: 'Login',
+                            title: 'login'.tr,
                             icon: Icons.login,
                           );
                         }

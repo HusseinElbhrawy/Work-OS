@@ -3,9 +3,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
    <application
-        android:label="work_os"
+        android:label="Work OS"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
        <activity
            android:name="com.yalantis.ucrop.UCropActivity"
            android:screenOrientation="portrait"

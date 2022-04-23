@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:work_os/utils/const/const.dart';
 
 class AddTaskScreenCustomWidget extends StatelessWidget {
@@ -40,7 +41,7 @@ class AddTaskScreenCustomWidget extends StatelessWidget {
             maxLength: maxLength,
             validator: (newValue) {
               if (newValue!.isEmpty || newValue.length < 7) {
-                return 'Filed is missing, This comment may less than 7 chars';
+                return 'validator'.tr;
               }
               return null;
             },

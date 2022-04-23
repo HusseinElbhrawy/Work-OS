@@ -35,7 +35,7 @@ class TaskWidget extends StatelessWidget {
                   HomeController().deleteTask(id: allData['TaskID']);
                 },
                 icon: const Icon(Icons.delete),
-                label: const Text('Remove'),
+                label: Text('remove'.tr),
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(Colors.red),
                 ),

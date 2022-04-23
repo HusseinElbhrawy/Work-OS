@@ -48,13 +48,13 @@ class SignUpController extends GetxController
           Get.back();
         } else {
           Get.back();
-          throw 'Please Select an Image';
+          throw 'please_select_an_image'.tr;
         }
       }).catchError(
         (error) {
           log("User didn't picked image yet");
           Get.snackbar(
-            'Warning',
+            'warning'.tr,
             error,
             colorText: kDarkBlue,
             backgroundColor: Colors.white,
@@ -76,13 +76,13 @@ class SignUpController extends GetxController
           Get.back();
         } else {
           Get.back();
-          throw 'Please Select an Image';
+          throw 'please_select_an_image'.tr;
         }
       }).catchError(
         (error) {
           log("User didn't picked image yet");
           Get.snackbar(
-            'Warning',
+            'warning'.tr,
             error,
             colorText: kDarkBlue,
             backgroundColor: Colors.white,
@@ -104,12 +104,12 @@ class SignUpController extends GetxController
         update();
       } else {
         Get.back();
-        throw 'Please Select an Image';
+        throw 'please_select_an_image'.tr;
       }
     }).catchError(
       (error) {
         Get.snackbar(
-          'Warning',
+          'warning'.tr,
           error,
           colorText: kDarkBlue,
           backgroundColor: Colors.white,
@@ -155,7 +155,7 @@ class SignUpController extends GetxController
   }) async {
     isLoading.value = true;
     if (pickedImage == null) {
-      errorSnackBar('Please Select Profile Image');
+      errorSnackBar('please_select_profile_image'.tr);
       isLoading.value = false;
     } else {
       isLoading.value = true;
@@ -172,10 +172,10 @@ class SignUpController extends GetxController
         Get.off(() => const HomeScreen());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
-          errorSnackBar('The password provided is too weak.');
+          errorSnackBar('weak_password'.tr);
           log('The password provided is too weak.');
         } else if (e.code == 'email-already-in-use') {
-          errorSnackBar('The account already exists for that email.');
+          errorSnackBar('email_already_in_use'.tr);
           log('The account already exists for that email.');
         }
         isLoading.value = false;

@@ -48,20 +48,6 @@ Future<dynamic> customDialog(
           },
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Get.back();
-          },
-          child: const Text('Closed'),
-        ),
-        TextButton(
-          onPressed: () {
-            //ToDo: cancel Filter Logic Here
-          },
-          child: const Text('Cancel Filter'),
-        ),
-      ],
     ),
   );
 }

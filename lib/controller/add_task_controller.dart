@@ -9,10 +9,10 @@ import 'package:work_os/views/widgets/snack_bar.dart';
 
 class AddTaskController extends GetxController {
   final TextEditingController taskCategoryController =
-          TextEditingController(text: 'Task Category'),
+          TextEditingController(text: 'task_category'.tr),
       taskTitleController = TextEditingController(),
       taskDescriptionController = TextEditingController(),
-      deadlineDateController = TextEditingController(text: 'Pick up a date');
+      deadlineDateController = TextEditingController(text: 'pick_up_date'.tr);
 
   final formKey = GlobalKey<FormState>();
   Timestamp? _deadlineDateTimeStamp;
@@ -27,14 +27,16 @@ class AddTaskController extends GetxController {
   void customDatePicker(context) async {
     showDatePicker(
       context: context,
+      cancelText: 'cancel'.tr,
+      confirmText: 'confirm'.tr,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
     ).then((DateTime? value) => updateDate(value)).catchError(
       (error) {
         Get.snackbar(
-          'Warning',
-          'Please Select a Date',
+          'warning'.tr,
+          'please_select_date'.tr,
           colorText: Colors.black,
           backgroundColor: Colors.red.shade300,
         );
@@ -70,9 +72,9 @@ class AddTaskController extends GetxController {
       );
       log('Done');
 
-      successsSnackBar('Uploaed Task Suceesfully');
+      successsSnackBar('uploaed_task_suceesfully'.tr);
     } catch (e) {
-      errorSnackBar('Something Error.');
+      errorSnackBar('something_error'.tr);
       log(e.toString());
     } finally {
       _clearControllers();

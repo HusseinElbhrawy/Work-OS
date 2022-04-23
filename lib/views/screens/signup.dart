@@ -40,10 +40,10 @@ class SignUpScreen extends StatelessWidget {
                     child: ListView(
                       children: [
                         SizedBox(height: deviceSize.height / 15),
-                        const TextAuthTitle(title: 'Sign Up'),
+                        TextAuthTitle(title: 'sign_up'.tr),
                         SwitchBetweenAuthMode(
-                          title1: "Already have an account?",
-                          title2: '\tSign In',
+                          title1: 'already_have_an_account'.tr,
+                          title2: 'login'.tr,
                           onTap: () {
                             Get.off(() => const LoginScreen());
                           },
@@ -63,11 +63,11 @@ class SignUpScreen extends StatelessWidget {
                                 controller: controller.fullNameController,
                                 validator: (value) {
                                   if (value!.length < 2 || value.isEmpty) {
-                                    return 'This name is too short';
+                                    return 'name_message_wrong'.tr;
                                   }
                                   return null;
                                 },
-                                labelText: 'Full Name',
+                                labelText: 'full_name'.tr,
                               ),
                             ),
                             const Expanded(child: ImagePickerWidget()),
@@ -86,11 +86,11 @@ class SignUpScreen extends StatelessWidget {
                             if (!value!.contains('@') ||
                                 value.isEmpty ||
                                 !value.contains('.')) {
-                              return 'This email is not valid';
+                              return 'this_email_is_not_valid'.tr;
                             }
                             return null;
                           },
-                          labelText: 'Email',
+                          labelText: 'email'.tr,
                         ),
                         CustomTextFormFiled(
                           focusNode: controller.passwordFocusNode,
@@ -104,11 +104,11 @@ class SignUpScreen extends StatelessWidget {
                           controller: controller.passwordController,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 7) {
-                              return 'This password is short password , it should at least 7 letters';
+                              return 'password_message_wrong'.tr;
                             }
                             return null;
                           },
-                          labelText: 'Password',
+                          labelText: 'password'.tr,
                           suffixIcon: controller.isObscureText
                               ? Icons.visibility
                               : Icons.visibility_off,
@@ -131,11 +131,11 @@ class SignUpScreen extends StatelessWidget {
                           controller: controller.phoneController,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 6) {
-                              return 'Not Valid';
+                              return 'not_valid'.tr;
                             }
                             return null;
                           },
-                          labelText: 'phone Number',
+                          labelText: 'phone_number'.tr,
                         ),
                         CustomTextFormFiled(
                           onTap: () {
@@ -163,11 +163,11 @@ class SignUpScreen extends StatelessWidget {
                           controller: controller.companyPositionController,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 2) {
-                              return 'Not Valid';
+                              return 'not_valid'.tr;
                             }
                             return null;
                           },
-                          labelText: 'Company Position',
+                          labelText: 'company_position'.tr,
                         ),
                         const SizedBox(height: 40),
                         GetX(
@@ -188,7 +188,7 @@ class SignUpScreen extends StatelessWidget {
                                           );
                                         }
                                       },
-                                      title: 'Sign Up',
+                                      title: 'sign_up'.tr,
                                       icon: Icons.person_add,
                                     ),
                             );

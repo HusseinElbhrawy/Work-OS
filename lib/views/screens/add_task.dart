@@ -35,7 +35,7 @@ class AddTaskScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: deviceSize.height / 40),
                   Text(
-                    'Add Filed are required',
+                    'all_filed_are_required'.tr,
                     style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           color: kDarkBlue,
                           fontWeight: FontWeight.bold,
@@ -49,13 +49,13 @@ class AddTaskScreen extends StatelessWidget {
                       onTap: () {
                         customDialog(
                           deviceSize,
-                          list: homeController.tasksCategoryList,
+                          list: homeController.tasksCategoryListToFilterd,
                           categoryController:
                               addTaskController.taskCategoryController,
                           isHomeScreen: true,
                         );
                       },
-                      title: 'Task Category',
+                      title: 'task_category'.tr,
                       hint: '',
                       enabled: false,
                     );
@@ -65,7 +65,7 @@ class AddTaskScreen extends StatelessWidget {
                     textEditingController:
                         addTaskController.taskTitleController,
                     onTap: () {},
-                    title: 'Task Title',
+                    title: 'task_title'.tr,
                     hint: '',
                     maxLength: 100,
                   ),
@@ -74,7 +74,7 @@ class AddTaskScreen extends StatelessWidget {
                     textEditingController:
                         addTaskController.taskDescriptionController,
                     onTap: () {},
-                    title: 'Task Description',
+                    title: 'task_description'.tr,
                     hint: '',
                     maxLength: 1000,
                     maxLines: 5,
@@ -84,7 +84,7 @@ class AddTaskScreen extends StatelessWidget {
                     textEditingController:
                         addTaskController.deadlineDateController,
                     onTap: () => addTaskController.customDatePicker(context),
-                    title: 'Deadline Date',
+                    title: 'deadline_date'.tr,
                     hint: '',
                     enabled: false,
                   ),
@@ -96,7 +96,7 @@ class AddTaskScreen extends StatelessWidget {
                               child: LinearProgressIndicator(),
                             )
                           : CustomAuthButton(
-                              title: 'Upload',
+                              title: 'upload'.tr,
                               icon: Icons.upload,
                               onTap: () {
                                 FocusScope.of(context).unfocus();

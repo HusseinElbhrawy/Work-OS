@@ -39,7 +39,7 @@ class TaskDetailsScreen extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        'Develop an App',
+                        'develop_an_app'.tr,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -59,12 +59,12 @@ class TaskDetailsScreen extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const CustomText(title: 'Uploaded By'),
+                                CustomText(title: 'upload_by'.tr),
                                 const Spacer(),
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(horizontal: 0),
-                                  child: Row(
+                                  child: Column(
                                     children: [
                                       ProfilePicture(
                                         deviceSize: deviceSize,
@@ -75,10 +75,22 @@ class TaskDetailsScreen extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(_taskDetailsController.value
-                                              .data()!['Name']),
-                                          Text(_taskDetailsController.value
-                                              .data()!['PositionInCompany']),
+                                          Text(
+                                            _taskDetailsController.value
+                                                .data()!['Name'],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6!
+                                                .copyWith(color: kDarkBlue),
+                                          ),
+                                          Text(
+                                            _taskDetailsController.value
+                                                .data()!['PositionInCompany'],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6!
+                                                .copyWith(color: kDarkBlue),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -90,7 +102,7 @@ class TaskDetailsScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const CustomText(title: 'Uploaded on:'),
+                                CustomText(title: 'upload_on'.tr),
                                 CustomText(
                                     title:
                                         '${controller.currentTaskData.data()!['CreatedAt'].toDate().year.toString()}/${controller.currentTaskData.data()!['CreatedAt'].toDate().month.toString()}/${controller.currentTaskData.data()!['CreatedAt'].toDate().day.toString()}'),
@@ -100,7 +112,7 @@ class TaskDetailsScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const CustomText(title: 'Deadline date:'),
+                                CustomText(title: 'deadline_date'.tr + ':'),
                                 CustomText(
                                     title: controller.currentTaskData
                                         .data()!['DeadlineDate'],
@@ -108,6 +120,7 @@ class TaskDetailsScreen extends StatelessWidget {
                               ],
                             ),
                             const Divider(color: Colors.transparent),
+
                             // Center(
                             //   child: !controller.currentTaskData
                             //           .data()!['CreatedAt']
@@ -127,10 +140,10 @@ class TaskDetailsScreen extends StatelessWidget {
                             //         ),
                             // ),
                             const Divider(color: kDarkBlue),
-                            const CustomText(title: 'Done Status'),
+                            CustomText(title: 'done_status'.tr),
                             Row(
                               children: [
-                                const Text('Done'),
+                                Text('done'.tr),
                                 GetX(
                                   builder: (TaskDetailsController controller) {
                                     return Checkbox(
@@ -151,9 +164,16 @@ class TaskDetailsScreen extends StatelessWidget {
                               ],
                             ),
                             const Divider(color: kDarkBlue),
-                            const CustomText(title: 'Task Description'),
-                            Text(controller.currentTaskData
-                                .data()!['TaskDescription']),
+                            CustomText(title: 'task_description'.tr),
+                            Text(
+                              controller.currentTaskData
+                                  .data()!['TaskDescription'],
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             ListTile(
                               leading: CircleAvatar(
                                 radius: 23,
@@ -182,8 +202,8 @@ class TaskDetailsScreen extends StatelessWidget {
                                                 child:
                                                     AddTaskScreenCustomWidget(
                                                   onTap: () {},
-                                                  title: 'Comment',
-                                                  hint: 'Comment',
+                                                  title: 'comment'.tr,
+                                                  hint: 'comment'.tr,
                                                   textEditingController:
                                                       _taskDetailsController
                                                           .commentController,
@@ -216,8 +236,7 @@ class TaskDetailsScreen extends StatelessWidget {
                                                             );
                                                           }
                                                         },
-                                                        child:
-                                                            const Text('Post'),
+                                                        child: Text('post'.tr),
                                                         textColor: Colors.white,
                                                         color: Colors
                                                             .pink.shade800,
@@ -231,8 +250,8 @@ class TaskDetailsScreen extends StatelessWidget {
                                                       MaterialButton(
                                                         onPressed: () => controller
                                                             .toggleBetweenIsComment(),
-                                                        child: const Text(
-                                                            'Cancel'),
+                                                        child:
+                                                            Text('cancel'.tr),
                                                         textColor: Colors.red,
                                                       ),
                                                     ],
@@ -250,8 +269,8 @@ class TaskDetailsScreen extends StatelessWidget {
                                             textColor: Colors.white,
                                             onPressed: () => controller
                                                 .toggleBetweenIsComment(),
-                                            child: const Text(
-                                              'Add a comment',
+                                            child: Text(
+                                              'add_comment'.tr,
                                             ),
                                           ),
                                   );
@@ -272,7 +291,7 @@ class TaskDetailsScreen extends StatelessWidget {
                                   );
                                 } else if (snapshot.hasError) {
                                   return Text(
-                                    'Something Error!',
+                                    'something_error'.tr,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineMedium,
@@ -338,6 +357,7 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: Theme.of(context).textTheme.headline6?.copyWith(
             color: isDeadlineDate ? Colors.red : kDarkBlue,
             fontWeight: FontWeight.bold,
