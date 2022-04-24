@@ -73,6 +73,9 @@ class MyLocalization implements Translations {
           'change_lan': 'تغير اللغة',
           'you_can_not_delete_this_task':
               'عذرا , فانت لا تملك صلاحية حذف هذه المهمه',
+          'no_user_found_for_that_email': 'عذرا لا يوجد مستخدم بهذا الحساب',
+          'wrong_password_provided_for_that_user': 'كلمة المرور ليست صحيحه',
+          'change_theme': 'تغير الثيم',
         },
         'en': {
           'uploaed_task_suceesfully': 'Uploaed Task Suceesfully',
@@ -142,6 +145,10 @@ class MyLocalization implements Translations {
           "pick_up_date": 'Pick up a date',
           'do_you_want_sign_out': 'Do you want to Sign Out?',
           'develop_an_app': 'Develop an App',
+          'no_user_found_for_that_email': 'No user found for that email.',
+          'change_theme': 'Change Theme',
+          'wrong_password_provided_for_that_user':
+              'Wrong password provided for that user.',
         },
       };
 }

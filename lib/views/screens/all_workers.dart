@@ -32,10 +32,7 @@ class AllWorkersScreen extends StatelessWidget {
                 list: homeController.tasksCategoryListToFilterd,
               );
             },
-            icon: Icon(
-              Icons.filter_list_outlined,
-              color: Colors.grey.shade700,
-            ),
+            icon: const Icon(Icons.filter_list_outlined),
           ),
         ],
       ),
@@ -55,6 +52,9 @@ class AllWorkersScreen extends StatelessWidget {
                   return Directionality(
                     textDirection: TextDirection.ltr,
                     child: Card(
+                      color: Get.isDarkMode
+                          ? const Color.fromARGB(255, 35, 43, 65)
+                          : Colors.white,
                       margin: const EdgeInsetsDirectional.all(4),
                       child: ListTile(
                         onTap: () {

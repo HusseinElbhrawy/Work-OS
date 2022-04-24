@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:work_os/controller/my_account_controller.dart';
 import 'package:work_os/controller/task_details_controller.dart';
 import 'package:work_os/utils/const/const.dart';
+import 'package:work_os/utils/styles/theme.dart';
 import 'package:work_os/views/widgets/add_task_screen_custom_widget.dart';
 import 'package:work_os/views/widgets/profile_picture.dart';
 
@@ -41,17 +42,15 @@ class TaskDetailsScreen extends StatelessWidget {
                       child: Text(
                         'develop_an_app'.tr,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .copyWith(
-                              color: kDarkBlue,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: Get.isDarkMode
+                            ? CustomDarkTheme.kmediumHeadline(context)
+                            : CustomLightTheme.mediumHeadline(context),
                       ),
                     ),
                     Card(
-                      color: Colors.white,
+                      color: Get.isDarkMode
+                          ? const Color.fromARGB(255, 35, 43, 65)
+                          : Colors.white,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -78,18 +77,20 @@ class TaskDetailsScreen extends StatelessWidget {
                                           Text(
                                             _taskDetailsController.value
                                                 .data()!['Name'],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline6!
-                                                .copyWith(color: kDarkBlue),
+                                            style: Get.isDarkMode
+                                                ? CustomDarkTheme.kHeadline6(
+                                                    context)
+                                                : CustomLightTheme.headline6(
+                                                    context),
                                           ),
                                           Text(
                                             _taskDetailsController.value
                                                 .data()!['PositionInCompany'],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline6!
-                                                .copyWith(color: kDarkBlue),
+                                            style: Get.isDarkMode
+                                                ? CustomDarkTheme.kHeadline6(
+                                                    context)
+                                                : CustomLightTheme.headline6(
+                                                    context),
                                           ),
                                         ],
                                       ),
@@ -168,11 +169,9 @@ class TaskDetailsScreen extends StatelessWidget {
                             Text(
                               controller.currentTaskData
                                   .data()!['TaskDescription'],
-                              style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: Get.isDarkMode
+                                  ? CustomDarkTheme.kHeadline6(context)
+                                  : CustomLightTheme.headline6(context),
                             ),
                             ListTile(
                               leading: CircleAvatar(
@@ -358,10 +357,13 @@ class CustomText extends StatelessWidget {
     return Text(
       title,
       overflow: TextOverflow.ellipsis,
-      style: Theme.of(context).textTheme.headline6?.copyWith(
-            color: isDeadlineDate ? Colors.red : kDarkBlue,
-            fontWeight: FontWeight.bold,
-          ),
+      style: Get.isDarkMode
+          ? CustomDarkTheme.kHeadline6(context).copyWith(
+              color: isDeadlineDate ? Colors.red : Colors.white,
+            )
+          : CustomLightTheme.headline6(context).copyWith(
+              color: isDeadlineDate ? Colors.red : kDarkBlue,
+            ),
     );
   }
 }

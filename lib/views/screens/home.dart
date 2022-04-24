@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/controller/home_controller.dart';
+import 'package:work_os/controller/style_controller.dart';
 import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/views/widgets/drawer_widget.dart';
 import 'package:work_os/views/widgets/tasks_widget.dart';
@@ -19,20 +20,11 @@ class HomeScreen extends StatelessWidget {
       extendBodyBehindAppBar: false,
       drawer: const DrawerWidget(),
       appBar: AppBar(
-        title: Text(
-          'tasks'.tr,
-          style: TextStyle(
-            color: Colors.pink.shade600,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text('tasks'.tr),
         actions: [
           IconButton(
             onPressed: () async => controller.showfilterDialog(),
-            icon: Icon(
-              Icons.filter_list_outlined,
-              color: Colors.grey.shade700,
-            ),
+            icon: const Icon(Icons.filter_list_outlined),
           ),
         ],
       ),
@@ -77,13 +69,19 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return RefreshIndicator(
-                    color: kDarkBlue,
-                    onRefresh: () async {},
-                    child: ListView.builder(
+                  return StatefulBuilder(
+                    builder: (BuildContext context,
+                            void Function(void Function()) setState) =>
+                        ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
+                        setState() => () {
+                              final StyleController styleController =
+                                  Get.find();
+                              styleController.changeTheme();
+                            };
+
                         return Directionality(
                           textDirection: TextDirection.ltr,
                           child: TaskWidget(

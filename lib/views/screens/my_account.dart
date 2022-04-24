@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/controller/my_account_controller.dart';
+import 'package:work_os/utils/styles/theme.dart';
 import 'package:work_os/views/widgets/custom_auth_button.dart';
 
 import '/utils/const/const.dart';
@@ -45,6 +46,9 @@ class MyAccountScreen extends StatelessWidget {
                 children: [
                   Card(
                     margin: const EdgeInsets.symmetric(horizontal: 30),
+                    color: Get.isDarkMode
+                        ? const Color.fromARGB(255, 35, 43, 65)
+                        : Colors.white,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -59,22 +63,17 @@ class MyAccountScreen extends StatelessWidget {
                               ? name.toString()
                               : controller.fullName.toString(),
                           overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Get.isDarkMode
+                              ? CustomDarkTheme.kHeadline6(context)
+                              : CustomLightTheme.headline6(context),
                         ),
                         Text(
                           comeFromAllWorkerScreen
                               ? '${postionInCompany.toString()} Since ${date?.toDate().year} - ${date?.toDate().month} - ${date?.toDate().day}'
                               : '${controller.positionInCompany.toString()} Since ${controller.date.toDate().year} - ${controller.date.toDate().month} - ${controller.date.toDate().day}',
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    color: kDarkBlue,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Get.isDarkMode
+                              ? CustomDarkTheme.kHeadline6(context)
+                              : CustomLightTheme.headline6(context),
                         ),
                         const Divider(color: kDarkBlue),
                         Column(

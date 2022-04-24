@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/controller/home_controller.dart';
+import 'package:work_os/utils/styles/theme.dart';
 import 'package:work_os/views/widgets/custom_dialog.dart';
 
 import '/controller/add_task_controller.dart';
@@ -25,7 +26,9 @@ class AddTaskScreen extends StatelessWidget {
         builder: (AddTaskController addTaskController) => Form(
           key: addTaskController.formKey,
           child: Card(
-            color: Colors.white,
+            color: Get.isDarkMode
+                ? const Color.fromARGB(255, 35, 43, 65)
+                : Colors.white,
             margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -36,10 +39,9 @@ class AddTaskScreen extends StatelessWidget {
                   SizedBox(height: deviceSize.height / 40),
                   Text(
                     'all_filed_are_required'.tr,
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          color: kDarkBlue,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: Get.isDarkMode
+                        ? CustomDarkTheme.smallHeadline(context)
+                        : CustomLightTheme.smallHeadline(context),
                   ),
                   const Divider(color: kDarkBlue),
                   Builder(builder: (context) {

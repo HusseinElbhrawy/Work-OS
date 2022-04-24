@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:work_os/utils/const/const.dart';
+import 'package:get/get.dart';
+import 'package:work_os/utils/styles/theme.dart';
 
 class MainInformationWidget extends StatelessWidget {
   const MainInformationWidget({
@@ -16,16 +17,18 @@ class MainInformationWidget extends StatelessWidget {
         children: [
           Text(
             '$title1:',
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Get.isDarkMode
+                ? CustomDarkTheme.kHeadline6(context)
+                : CustomLightTheme.headline6(context),
           ),
-          Text(
-            title2,
-            style: const TextStyle(
-              color: kDarkBlue,
-              fontSize: 15,
+          SizedBox(
+            width: Get.width / 2.5,
+            child: Text(
+              title2,
+              overflow: TextOverflow.ellipsis,
+              style: Get.isDarkMode
+                  ? CustomDarkTheme.bodyLarge(context)
+                  : CustomLightTheme.bodyLarge(context),
             ),
           ),
         ],

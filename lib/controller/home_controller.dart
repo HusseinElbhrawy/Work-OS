@@ -41,15 +41,6 @@ class HomeController extends GetxController {
   }
 
   String? filterdValue1;
-  // final List<String> tasksCategoryList = [
-  //   'business'.tr,
-  //   'programming'.tr,
-  //   'information_technology'.tr,
-  //   'human_resources'.tr,
-  //   'marketing'.tr,
-  //   'design'.tr,
-  //   'accounting'.tr,
-  // ];
   final List<String> tasksCategoryListToFilterd = [
     'Business',
     'Programming',
@@ -67,7 +58,7 @@ class HomeController extends GetxController {
         title: Text(
           'task_category'.tr,
           style: TextStyle(
-            color: Colors.pink.shade600,
+            color: Get.isDarkMode ? Colors.white : Colors.pink.shade600,
           ),
         ),
         content: SizedBox(
@@ -100,7 +91,12 @@ class HomeController extends GetxController {
             onPressed: () {
               Get.back();
             },
-            child: Text('cancel'.tr),
+            child: Text(
+              'cancel'.tr,
+              style: TextStyle(
+                color: Get.isDarkMode ? Colors.white : Colors.blue,
+              ),
+            ),
           ),
           TextButton(
             onPressed: () {
@@ -108,7 +104,12 @@ class HomeController extends GetxController {
               update();
               Get.back();
             },
-            child: Text('cancel_filter'.tr),
+            child: Text(
+              'cancel_filter'.tr,
+              style: TextStyle(
+                color: Get.isDarkMode ? Colors.white : Colors.blue,
+              ),
+            ),
           ),
         ],
       ),

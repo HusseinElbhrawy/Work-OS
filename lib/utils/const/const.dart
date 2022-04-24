@@ -11,6 +11,7 @@ import 'package:work_os/views/screens/login.dart';
 const kDarkBlue = Color(0xff00325a);
 
 const kScaffoldBGColor = Color(0xffede7dc);
+// const kScaffoldBGColor = Color(0xffede7dc);
 
 void logOut() async {
   log('Log Out Start');

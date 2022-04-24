@@ -15,7 +15,7 @@ Future<dynamic> customDialog(
       title: Text(
         'Task Category',
         style: TextStyle(
-          color: Colors.pink.shade600,
+          color: Get.isDarkMode ? Colors.white : Colors.pink.shade600,
         ),
       ),
       content: SizedBox(

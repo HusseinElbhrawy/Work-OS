@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:work_os/utils/const/const.dart';
+import 'package:get/get.dart';
+import 'package:work_os/utils/styles/theme.dart';
 
 class CustomListTile extends StatelessWidget {
   const CustomListTile({
@@ -16,13 +17,17 @@ class CustomListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => onTap(),
-      leading: Icon(icon, color: kDarkBlue),
+      leading: Icon(
+        icon,
+        color: Get.isDarkMode
+            ? CustomDarkTheme.iconColor
+            : CustomLightTheme.iconColor,
+      ),
       title: Text(
         title,
-        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              color: kDarkBlue,
-              fontWeight: FontWeight.bold,
-            ),
+        style: Get.isDarkMode
+            ? CustomDarkTheme.smallHeadline(context)
+            : CustomLightTheme.smallHeadline(context),
       ),
     );
   }

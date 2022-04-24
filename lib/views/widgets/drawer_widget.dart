@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
+import 'package:work_os/controller/style_controller.dart';
 import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/utils/localization/local_controller.dart';
+import 'package:work_os/utils/styles/theme.dart';
 import 'package:work_os/views/screens/add_task.dart';
 import 'package:work_os/views/screens/all_workers.dart';
 import 'package:work_os/views/screens/home.dart';
@@ -10,13 +12,12 @@ import 'package:work_os/views/screens/my_account.dart';
 import 'package:work_os/views/widgets/custom_list_tile.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({
-    Key? key,
-  }) : super(key: key);
+  const DrawerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     LocalizationController localizatationController = Get.find();
+    StyleController styleController = Get.find();
 
     return Drawer(
       child: Column(
@@ -31,10 +32,9 @@ class DrawerWidget extends StatelessWidget {
                   const FlutterLogo(size: 40),
                   Text(
                     'Work OS',
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          color: kDarkBlue,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: Get.isDarkMode
+                        ? CustomDarkTheme.kmediumHeadline(context)
+                        : CustomLightTheme.mediumHeadline(context),
                   )
                 ],
               ),
@@ -73,28 +73,26 @@ class DrawerWidget extends StatelessWidget {
           ),
           GetBuilder(
             builder: (LocalizationController controller) {
-              return ListTileSwitch(
-                value: LocalizationController.isArabic,
-                leading: const Icon(
-                  Icons.language_outlined,
-                  color: kDarkBlue,
-                ),
-                onChanged: (value) {
+              return CustomListTileSwith(
+                iconData: Icons.language_outlined,
+                title: 'change_lan'.tr,
+                value: localizatationController.isArabic,
+                onChange: (value) {
                   localizatationController.changeLanguage(
                     langKey: value == true ? 'ar' : 'en',
                     newValue: value,
                   );
                 },
-                switchType: SwitchType.custom,
-                switchActiveColor: Colors.indigo,
-                title: Text(
-                  'change_lan'.tr,
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: kDarkBlue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
               );
+            },
+          ),
+          CustomListTileSwith(
+            iconData: Icons.color_lens,
+            title: 'change_theme'.tr,
+            value: styleController.isDarkTheme,
+            onChange: (value) {
+              final StyleController styleController = Get.find();
+              styleController.changeTheme();
             },
           ),
           const Divider(color: kDarkBlue),
@@ -112,17 +110,23 @@ class DrawerWidget extends StatelessWidget {
                       const VerticalDivider(color: Colors.transparent),
                       Text(
                         'log_out'.tr,
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6 /* !.copyWith(
                               color: kDarkBlue,
-                            ),
+                            ) */
+                        ,
                       ),
                     ],
                   ),
                   content: Text(
                     'do_you_want_sign_out'.tr,
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6 /* !.copyWith(
                           color: kDarkBlue,
-                        ),
+                        ) */
+                    ,
                   ),
                   actions: [
                     TextButton(
@@ -145,6 +149,42 @@ class DrawerWidget extends StatelessWidget {
             icon: Icons.logout_outlined,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomListTileSwith extends StatelessWidget {
+  const CustomListTileSwith({
+    Key? key,
+    required this.onChange,
+    required this.value,
+    required this.title,
+    required this.iconData,
+  }) : super(key: key);
+
+  final Function(bool value) onChange;
+  final bool value;
+  final String title;
+  final IconData iconData;
+  @override
+  Widget build(BuildContext context) {
+    return ListTileSwitch(
+      value: value,
+      leading: Icon(
+        iconData,
+        color: Get.isDarkMode
+            ? CustomDarkTheme.iconColor
+            : CustomLightTheme.iconColor,
+      ),
+      onChanged: (value) => onChange(value),
+      switchType: SwitchType.custom,
+      switchActiveColor: Colors.indigo,
+      title: Text(
+        title,
+        style: Get.isDarkMode
+            ? CustomDarkTheme.smallHeadline(context)
+            : CustomLightTheme.smallHeadline(context),
       ),
     );
   }

@@ -26,7 +26,7 @@ class AddTaskScreenCustomWidget extends StatelessWidget {
         Text(
           '$title*',
           style: Theme.of(context).textTheme.headline6!.copyWith(
-                color: Colors.pink.shade700,
+                color: Get.isDarkMode ? Colors.white : Colors.pink.shade700,
               ),
         ),
         GestureDetector(
@@ -49,7 +49,7 @@ class AddTaskScreenCustomWidget extends StatelessWidget {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               filled: true,
-              fillColor: kScaffoldBGColor,
+              fillColor: Get.isDarkMode ? Colors.white : kScaffoldBGColor,
               hintText: hint,
               hintStyle: const TextStyle(fontWeight: FontWeight.bold),
               focusedBorder: _buildUnderlineInputBorder(),
