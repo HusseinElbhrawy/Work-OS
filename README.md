@@ -1,16 +1,15 @@
-# work_os
+# Work OS 
 
-A new Flutter project.
+A new Flutter project. for managing the tasks of the company's employees.
 
-## Getting Started
+## Video
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+https://user-images.githubusercontent.com/64389727/164944018-17ccf41e-63d7-4094-9d11-02dff15bf5b1.mp4
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Screens
+![3](https://user-images.githubusercontent.com/64389727/164944020-33331fe9-4dff-4bbe-8cbc-f29e9c617c2c.png)
+![6](https://user-images.githubusercontent.com/64389727/164944024-4d78eba6-8337-445c-a51a-803ef1ff3228.png)
+![9](https://user-images.githubusercontent.com/64389727/164944025-cca62007-f61f-4e92-ad4f-6b75f03b9800.png)
