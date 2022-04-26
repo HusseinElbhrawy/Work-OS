@@ -78,7 +78,7 @@ class TaskDetailsScreen extends StatelessWidget {
                                             _taskDetailsController.value
                                                 .data()!['Name'],
                                             style: Get.isDarkMode
-                                                ? CustomDarkTheme.kHeadline6(
+                                                ? CustomDarkTheme.headline6(
                                                     context)
                                                 : CustomLightTheme.headline6(
                                                     context),
@@ -87,7 +87,7 @@ class TaskDetailsScreen extends StatelessWidget {
                                             _taskDetailsController.value
                                                 .data()!['PositionInCompany'],
                                             style: Get.isDarkMode
-                                                ? CustomDarkTheme.kHeadline6(
+                                                ? CustomDarkTheme.headline6(
                                                     context)
                                                 : CustomLightTheme.headline6(
                                                     context),
@@ -170,7 +170,7 @@ class TaskDetailsScreen extends StatelessWidget {
                               controller.currentTaskData
                                   .data()!['TaskDescription'],
                               style: Get.isDarkMode
-                                  ? CustomDarkTheme.kHeadline6(context)
+                                  ? CustomDarkTheme.headline6(context)
                                   : CustomLightTheme.headline6(context),
                             ),
                             ListTile(
@@ -358,7 +358,7 @@ class CustomText extends StatelessWidget {
       title,
       overflow: TextOverflow.ellipsis,
       style: Get.isDarkMode
-          ? CustomDarkTheme.kHeadline6(context).copyWith(
+          ? CustomDarkTheme.headline6(context).copyWith(
               color: isDeadlineDate ? Colors.red : Colors.white,
             )
           : CustomLightTheme.headline6(context).copyWith(

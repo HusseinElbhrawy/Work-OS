@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
           theme: kLighTheme,
           darkTheme: kDarkTheme,
           themeMode: controller.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
+          // home: const TestScreen(),
           home: SplashScreenView(
             navigateRoute: FutureBuilder(
               future: Firebase.initializeApp(),
@@ -71,7 +72,9 @@ class MyApp extends StatelessWidget {
                 .textTheme
                 .headlineLarge!
                 .copyWith(color: kDarkBlue, fontWeight: FontWeight.bold),
-            backgroundColor: kScaffoldBGColor,
+            backgroundColor: styleController.isDarkTheme
+                ? const Color(0xff1E2336)
+                : kScaffoldBGColor,
           ),
         );
       },

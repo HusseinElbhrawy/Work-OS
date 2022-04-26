@@ -18,11 +18,11 @@ class MainInformationWidget extends StatelessWidget {
           Text(
             '$title1:',
             style: Get.isDarkMode
-                ? CustomDarkTheme.kHeadline6(context)
+                ? CustomDarkTheme.headline6(context)
                 : CustomLightTheme.headline6(context),
           ),
           SizedBox(
-            width: Get.width / 2.5,
+            width: Get.width / 3,
             child: Text(
               title2,
               overflow: TextOverflow.ellipsis,

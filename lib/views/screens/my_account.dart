@@ -64,7 +64,7 @@ class MyAccountScreen extends StatelessWidget {
                               : controller.fullName.toString(),
                           overflow: TextOverflow.ellipsis,
                           style: Get.isDarkMode
-                              ? CustomDarkTheme.kHeadline6(context)
+                              ? CustomDarkTheme.headline6(context)
                               : CustomLightTheme.headline6(context),
                         ),
                         Text(
@@ -72,7 +72,7 @@ class MyAccountScreen extends StatelessWidget {
                               ? '${postionInCompany.toString()} Since ${date?.toDate().year} - ${date?.toDate().month} - ${date?.toDate().day}'
                               : '${controller.positionInCompany.toString()} Since ${controller.date.toDate().year} - ${controller.date.toDate().month} - ${controller.date.toDate().day}',
                           style: Get.isDarkMode
-                              ? CustomDarkTheme.kHeadline6(context)
+                              ? CustomDarkTheme.headline6(context)
                               : CustomLightTheme.headline6(context),
                         ),
                         const Divider(color: kDarkBlue),

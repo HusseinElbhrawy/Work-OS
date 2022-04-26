@@ -4,6 +4,7 @@ import 'package:work_os/controller/all_worker_controller.dart';
 import 'package:work_os/controller/home_controller.dart';
 import 'package:work_os/controller/my_account_controller.dart';
 import 'package:work_os/utils/const/const.dart';
+import 'package:work_os/utils/styles/theme.dart';
 import 'package:work_os/views/screens/my_account.dart';
 import 'package:work_os/views/widgets/drawer_widget.dart';
 import 'package:work_os/views/widgets/custom_dialog.dart';
@@ -18,12 +19,7 @@ class AllWorkersScreen extends StatelessWidget {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'all_workers'.tr,
-          style: TextStyle(
-            color: Colors.pink.shade800,
-          ),
-        ),
+        title: Text('all_workers'.tr),
         actions: [
           IconButton(
             onPressed: () {
@@ -97,11 +93,9 @@ class AllWorkersScreen extends StatelessWidget {
                         ),
                         title: Text(
                           controller.allWorkers[index]['Name'],
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    color: kDarkBlue,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Get.isDarkMode
+                              ? CustomDarkTheme.headline6(context)
+                              : CustomLightTheme.headline6(context),
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:work_os/utils/const/const.dart';
 
 class CustomLightTheme {
@@ -40,7 +39,7 @@ class CustomDarkTheme {
             color: Colors.white,
             fontWeight: FontWeight.bold,
           );
-  static TextStyle kHeadline6(context) =>
+  static TextStyle headline6(context) =>
       Theme.of(context).textTheme.headline6!.copyWith(
             color: Colors.white,
           );
@@ -71,10 +70,6 @@ ThemeData kLighTheme = ThemeData.light().copyWith(
     iconTheme: IconThemeData(color: kDarkBlue),
     actionsIconTheme: IconThemeData(color: kDarkBlue),
     backgroundColor: kScaffoldBGColor,
-    systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: kScaffoldBGColor,
-      statusBarIconBrightness: Brightness.dark,
-    ),
   ),
 );
 ThemeData kDarkTheme = ThemeData.dark().copyWith(
@@ -84,10 +79,6 @@ ThemeData kDarkTheme = ThemeData.dark().copyWith(
   appBarTheme: const AppBarTheme(
     iconTheme: IconThemeData(color: Colors.white),
     actionsIconTheme: IconThemeData(color: Colors.white),
-    systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: Color(0xff171D2D),
-      statusBarIconBrightness: Brightness.light,
-    ),
     backgroundColor: Color(0xff171D2D),
     elevation: 0,
     titleTextStyle: TextStyle(

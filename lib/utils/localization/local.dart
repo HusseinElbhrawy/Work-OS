@@ -40,7 +40,7 @@ class MyLocalization implements Translations {
           'register_workers': 'الموظفين',
           'add_task': 'إضافة مهمه جديدة',
           'log_out': 'تسجيل الخروج',
-          'contact_info': 'معلمومات التواصل👇',
+          'contact_info': 'معلومات التواصل👇',
           'confirm': 'اختر',
           'all_workers': 'جميع الموظفين',
           'task_title': 'اسم المهمه',

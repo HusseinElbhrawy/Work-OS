@@ -6,26 +6,45 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/views/widgets/snack_bar.dart';
 
-class HomeController extends GetxController {
-  late QuerySnapshot<Map<String, dynamic>> tasks;
-  bool isLoading = false;
-  void getAllTasks() async {
-    isLoading = true;
-    try {
-      tasks = await FirebaseFirestore.instance.collection('tasks').get();
-    } finally {
-      isLoading = false;
-      update();
-    }
+class HomeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<double> opacity;
+  late Animation<Offset> position;
+
+  @override
+  void onInit() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    )..forward();
+    opacity =
+        CurvedAnimation(parent: animationController, curve: Curves.easeInQuad);
+    position =
+        Tween<Offset>(begin: const Offset(-5, 0), end: const Offset(0, 0))
+            .animate(animationController);
+    super.onInit();
   }
 
-  void listenToNewTasks() async {
-    FirebaseFirestore.instance.collection('tasks').snapshots().listen(
-      (event) {
-        log(event.docs[2].data().toString());
-      },
-    );
-  }
+  // late QuerySnapshot<Map<String, dynamic>> tasks;
+  // bool isLoading = false;
+  // void getAllTasks() async {
+  //   isLoading = true;
+  //   try {
+  //     tasks = await FirebaseFirestore.instance.collection('tasks').get();
+  //   } finally {
+  //     isLoading = false;
+  //     update();
+  //   }
+  // }
+
+  // void listenToNewTasks() async {
+  //   FirebaseFirestore.instance.collection('tasks').snapshots().listen(
+  //     (event) {
+  //       log(event.docs[2].data().toString());
+  //     },
+  //   );
+  // }
 
   void deleteTask({required String id}) async {
     Get.back();
@@ -51,7 +70,6 @@ class HomeController extends GetxController {
     'Accounting',
   ];
 
-  List x = [];
   Future<void> showfilterDialog() async {
     return Get.dialog(
       AlertDialog(
