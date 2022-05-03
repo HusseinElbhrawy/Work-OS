@@ -30,13 +30,17 @@ class TaskDetailsController extends GetxController {
   }
 
   static String? taskId, _uploadBy;
+  static RxBool loadingData = false.obs;
 
-  static void initData({required String id, required String uBy}) {
+  static Future<void> initData(
+      {required String id, required String uBy}) async {
+    loadingData = true.obs;
+
     taskId = id;
     _uploadBy = uBy;
+    loadingData = false.obs;
   }
 
-  RxBool loadingData = false.obs;
   late DocumentSnapshot<Map<String, dynamic>> currentTaskData;
   void getCurrentTaskDetails() async {
     loadingData.value = true;

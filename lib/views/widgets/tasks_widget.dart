@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:work_os/controller/home_controller.dart';
 import 'package:work_os/controller/style_controller.dart';
 import 'package:work_os/controller/task_details_controller.dart';
-import 'package:work_os/views/screens/task_details.dart';
+import 'package:work_os/utils/const/const.dart';
+import 'package:work_os/views/screens/task_details/task_details.dart';
 
 class TaskWidget extends StatefulWidget {
   const TaskWidget({
@@ -23,23 +24,21 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   @override
   Widget build(BuildContext context) {
-    TaskDetailsController.initData(
-      id: widget.allData['TaskID'],
-      uBy: widget.allData['UploadedBy'],
-    );
+    // TaskDetailsController.initData(
+    //   id: widget.allData['TaskID'],
+    //   uBy: widget.allData['UploadedBy'],
+    // );
 
     return GetBuilder(
       builder: (StyleController controller) {
         return Card(
-          color: controller.isDarkTheme
-              ? const Color.fromARGB(255, 35, 43, 65)
-              : Colors.white,
+          color: controller.isDarkTheme ? kDarkModeItemColor : Colors.white,
           margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
           child: ListTile(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             onTap: () async {
-              TaskDetailsController.initData(
+              await TaskDetailsController.initData(
                 id: widget.allData['TaskID'],
                 uBy: widget.allData['UploadedBy'],
               );

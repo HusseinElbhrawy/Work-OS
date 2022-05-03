@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '/controller/signup_controller.dart';
-import '/views/screens/login.dart';
+import '../login/login.dart';
 import '/views/widgets/bg_image.dart';
 import '/views/widgets/custom_auth_button.dart';
 import '/views/widgets/custom_text_form_field.dart';
-import '../widgets/custom_dialog.dart';
+import '../../widgets/custom_dialog.dart';
 import '/views/widgets/image_picker_widget.dart';
 import '/views/widgets/switch_between_auth_mode.dart';
 import '/views/widgets/text_auth_title.dart';

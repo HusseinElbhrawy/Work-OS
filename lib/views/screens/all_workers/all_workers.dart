@@ -1,13 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/controller/all_worker_controller.dart';
 import 'package:work_os/controller/home_controller.dart';
-import 'package:work_os/controller/my_account_controller.dart';
 import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/utils/styles/theme.dart';
-import 'package:work_os/views/screens/my_account.dart';
+import 'package:work_os/views/screens/inner_chat/inner_chat.dart';
+import 'package:work_os/views/screens/my_account/my_account.dart';
 import 'package:work_os/views/widgets/drawer_widget.dart';
-import 'package:work_os/views/widgets/custom_dialog.dart';
 
 class AllWorkersScreen extends StatelessWidget {
   const AllWorkersScreen({Key? key}) : super(key: key);
@@ -18,20 +19,7 @@ class AllWorkersScreen extends StatelessWidget {
     final HomeController homeController = Get.find();
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('all_workers'.tr),
-        actions: [
-          IconButton(
-            onPressed: () {
-              customDialog(
-                deviceSize,
-                list: homeController.tasksCategoryListToFilterd,
-              );
-            },
-            icon: const Icon(Icons.filter_list_outlined),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text('all_workers'.tr)),
       drawer: const DrawerWidget(),
       body: GetX(
         builder: (AllWorkersController controller) {
@@ -118,9 +106,17 @@ class AllWorkersScreen extends StatelessWidget {
                             ? const SizedBox.shrink()
                             : IconButton(
                                 onPressed: () {
-                                  MyAccountController().openLink(
-                                      url:
-                                          'mailto:${controller.allWorkers[index]['Email']}');
+                                  log(controller.allWorkers[index]['Id']);
+                                  Get.to(
+                                    () => const InnerCharScreen(),
+                                    arguments: {
+                                      'id': controller.allWorkers[index]['Id'],
+                                      'name': controller.allWorkers[index]
+                                          ['Name'],
+                                      'imageUrl': controller.allWorkers[index]
+                                          ['ImageUrl'],
+                                    },
+                                  );
                                 },
                                 icon: Icon(
                                   Icons.mail_outlined,

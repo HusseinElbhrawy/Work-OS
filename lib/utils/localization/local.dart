@@ -76,6 +76,7 @@ class MyLocalization implements Translations {
           'no_user_found_for_that_email': 'عذرا لا يوجد مستخدم بهذا الحساب',
           'wrong_password_provided_for_that_user': 'كلمة المرور ليست صحيحه',
           'change_theme': 'تغير الثيم',
+          'chats_screen': 'المحادثات',
         },
         'en': {
           'uploaed_task_suceesfully': 'Uploaed Task Suceesfully',
@@ -149,6 +150,7 @@ class MyLocalization implements Translations {
           'change_theme': 'Change Theme',
           'wrong_password_provided_for_that_user':
               'Wrong password provided for that user.',
+          'chats_screen': 'Chats',
         },
       };
 }

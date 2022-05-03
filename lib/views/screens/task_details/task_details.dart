@@ -26,7 +26,7 @@ class TaskDetailsScreen extends StatelessWidget {
       appBar: AppBar(),
       body: GetX(
         builder: (TaskDetailsController controller) {
-          if (controller.loadingData.value) {
+          if (TaskDetailsController.loadingData.value) {
             return const Center(
               child: CircularProgressIndicator(),
             );

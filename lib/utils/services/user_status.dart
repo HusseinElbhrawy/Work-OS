@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:get_storage/get_storage.dart';
-import 'package:work_os/views/screens/home.dart';
-import 'package:work_os/views/screens/login.dart';
+import 'package:work_os/views/screens/home/home.dart';
+import 'package:work_os/views/screens/login/login.dart';
 
 class UserStatus {
   final GetStorage _box = GetStorage();

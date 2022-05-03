@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_os/views/screens/fotget_password/forget_password.dart';
 
 import '/controller/login_controller.dart';
-import '/views/screens/forget_password.dart';
-import '/views/screens/signup.dart';
+import '../signup/signup.dart';
 import '/views/widgets/bg_image.dart';
 import '/views/widgets/custom_auth_button.dart';
 import '/views/widgets/custom_text_form_field.dart';

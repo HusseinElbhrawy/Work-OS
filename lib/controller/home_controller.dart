@@ -26,26 +26,6 @@ class HomeController extends GetxController
     super.onInit();
   }
 
-  // late QuerySnapshot<Map<String, dynamic>> tasks;
-  // bool isLoading = false;
-  // void getAllTasks() async {
-  //   isLoading = true;
-  //   try {
-  //     tasks = await FirebaseFirestore.instance.collection('tasks').get();
-  //   } finally {
-  //     isLoading = false;
-  //     update();
-  //   }
-  // }
-
-  // void listenToNewTasks() async {
-  //   FirebaseFirestore.instance.collection('tasks').snapshots().listen(
-  //     (event) {
-  //       log(event.docs[2].data().toString());
-  //     },
-  //   );
-  // }
-
   void deleteTask({required String id}) async {
     Get.back();
     var value =

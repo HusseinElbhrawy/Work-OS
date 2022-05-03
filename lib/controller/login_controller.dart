@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/utils/services/user_status.dart';
-import 'package:work_os/views/screens/home.dart';
+import 'package:work_os/views/screens/home/home.dart';
 
 import '../views/widgets/snack_bar.dart';
 

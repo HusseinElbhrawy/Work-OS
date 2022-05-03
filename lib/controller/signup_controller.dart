@@ -10,7 +10,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/utils/services/user_status.dart';
-import 'package:work_os/views/screens/home.dart';
+import 'package:work_os/views/screens/home/home.dart';
 import 'package:work_os/views/widgets/snack_bar.dart';
 
 class SignUpController extends GetxController

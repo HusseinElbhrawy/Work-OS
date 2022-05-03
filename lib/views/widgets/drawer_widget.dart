@@ -5,10 +5,11 @@ import 'package:work_os/controller/style_controller.dart';
 import 'package:work_os/utils/const/const.dart';
 import 'package:work_os/utils/localization/local_controller.dart';
 import 'package:work_os/utils/styles/theme.dart';
-import 'package:work_os/views/screens/add_task.dart';
-import 'package:work_os/views/screens/all_workers.dart';
-import 'package:work_os/views/screens/home.dart';
-import 'package:work_os/views/screens/my_account.dart';
+import 'package:work_os/views/screens/add_task/add_task.dart';
+import 'package:work_os/views/screens/all_workers/all_workers.dart';
+import 'package:work_os/views/screens/chats/chats.dart';
+import 'package:work_os/views/screens/home/home.dart';
+import 'package:work_os/views/screens/my_account/my_account.dart';
 import 'package:work_os/views/widgets/custom_list_tile.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -70,6 +71,13 @@ class DrawerWidget extends StatelessWidget {
               Get.offAll(() => const AddTaskScreen());
             },
             icon: Icons.add_task_outlined,
+          ),
+          CustomListTile(
+            title: 'chats_screen'.tr,
+            onTap: () {
+              Get.offAll(() => const ChatScreen());
+            },
+            icon: Icons.chat,
           ),
           GetBuilder(
             builder: (LocalizationController controller) {
