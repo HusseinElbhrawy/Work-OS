@@ -18,6 +18,8 @@ class HomeScreen extends StatelessWidget {
       HomeController(),
       permanent: true,
     );
+    controller.makeCurrentUserOnline();
+
     return Scaffold(
       extendBodyBehindAppBar: false,
       drawer: const DrawerWidget(),

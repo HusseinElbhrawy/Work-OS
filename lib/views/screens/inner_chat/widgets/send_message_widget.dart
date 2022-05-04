@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/controller/inner_chat_controller.dart';
@@ -26,7 +28,9 @@ class SendMessageWidget extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                log('Printed');
+              },
               icon: const Icon(
                 Icons.mic,
               ),

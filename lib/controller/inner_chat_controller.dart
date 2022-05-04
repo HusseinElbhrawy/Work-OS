@@ -23,12 +23,39 @@ class InnerChatController extends GetxController {
             timestamp: Timestamp.now(),
           ).toMap(),
         );
+    await firebaseObject
+        .collection('chats')
+        .doc(sendTo)
+        .collection('chatWith')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('messages')
+        .add(
+          MessageModel(
+            messageContent: message,
+            sendTo: sendTo,
+            sendFrom: FirebaseAuth.instance.currentUser!.uid,
+            timestamp: Timestamp.now(),
+          ).toMap(),
+        );
     messageTextFormFiled.clear();
+  }
+
+  static late String userId;
+  static void initData({required String id}) {
+    userId = id;
+  }
+
+  bool isOnline = false;
+  Future isUserOnline() async {
+    var date = await firebaseObject.collection('users').doc(userId).get();
+    isOnline = date.data()!['IsOnline'];
+    update();
   }
 
   @override
   void onInit() {
     messageTextFormFiled = TextEditingController();
+    isUserOnline();
     super.onInit();
   }
 }

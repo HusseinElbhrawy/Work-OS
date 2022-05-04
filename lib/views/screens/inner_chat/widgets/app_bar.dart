@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 PreferredSizeWidget innerChatAppBar({
   required String name,
   required String imageUrl,
+  required String id,
 }) {
   return AppBar(
     leadingWidth: 15,
@@ -21,7 +23,17 @@ PreferredSizeWidget innerChatAppBar({
         backgroundImage: NetworkImage(imageUrl),
       ),
       title: Text(name),
-      subtitle: const Text('Online'),
+      subtitle: StreamBuilder(
+        stream:
+            FirebaseFirestore.instance.collection('users').doc(id).snapshots(),
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LinearProgressIndicator();
+          } else {
+            return Text(snapshot.data['IsOnline'] ? 'Online' : '');
+          }
+        },
+      ),
     ),
     actions: [
       IconButton(

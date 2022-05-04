@@ -200,6 +200,7 @@ class SignUpController extends GetxController
       'PhoneNumber': phoneController.text.trim(),
       'PositionInCompany': companyPositionController.text.trim(),
       'CreatedAt': Timestamp.now(),
+      'IsOnline': false,
     });
   }
 

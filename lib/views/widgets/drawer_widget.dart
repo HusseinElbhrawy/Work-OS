@@ -118,23 +118,13 @@ class DrawerWidget extends StatelessWidget {
                       const VerticalDivider(color: Colors.transparent),
                       Text(
                         'log_out'.tr,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6 /* !.copyWith(
-                              color: kDarkBlue,
-                            ) */
-                        ,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   ),
                   content: Text(
                     'do_you_want_sign_out'.tr,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6 /* !.copyWith(
-                          color: kDarkBlue,
-                        ) */
-                    ,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   actions: [
                     TextButton(

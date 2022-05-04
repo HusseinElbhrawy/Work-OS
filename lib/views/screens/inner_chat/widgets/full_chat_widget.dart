@@ -18,11 +18,14 @@ class FullChatWidget extends StatelessWidget {
       children: [
         Expanded(
           child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               return MessageItemWidget(
                 message: snapshot.data!.docs[index].data()['messageContent'],
                 timestamp: snapshot.data!.docs[index].data()['timestamp'],
+                isTheSameUser: snapshot.data!.docs[index].data()['sendFrom'] ==
+                    userData['id'],
               );
             },
           ),

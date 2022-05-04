@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_os/controller/all_worker_controller.dart';
+import 'package:work_os/controller/home_controller.dart';
 import 'package:work_os/controller/my_account_controller.dart';
 import 'package:work_os/utils/services/user_status.dart';
 import 'package:work_os/views/screens/login/login.dart';
@@ -17,8 +18,10 @@ const kDarkModeItemColor = Color.fromARGB(255, 35, 43, 65);
 void logOut() async {
   log('Log Out Start');
   Get.back();
-  await FirebaseAuth.instance.signOut().then((value) {
+  await FirebaseAuth.instance.signOut().then((value) async {
     log('Start');
+    HomeController homeController = Get.put(HomeController());
+    await homeController.makeCurrentUserOffline();
     Get.offAll(() => const LoginScreen());
     UserStatus().saveToBox(false);
     Get.delete<MyAccountController>(force: true);
