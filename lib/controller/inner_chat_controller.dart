@@ -90,6 +90,14 @@ class InnerChatController extends GetxController {
         );
     await firebaseObject
         .collection('chats')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('chatWith')
+        .doc(sendTo)
+        .set({
+      'id': sendTo,
+    });
+    await firebaseObject
+        .collection('chats')
         .doc(sendTo)
         .collection('chatWith')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -102,6 +110,14 @@ class InnerChatController extends GetxController {
             timestamp: Timestamp.now(),
           ).toMap(),
         );
+    await firebaseObject
+        .collection('chats')
+        .doc(sendTo)
+        .collection('chatWith')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({
+      'id': FirebaseAuth.instance.currentUser!.uid,
+    });
   }
 
   void sendMessage({required String message, required String sendTo}) async {
@@ -121,6 +137,15 @@ class InnerChatController extends GetxController {
         );
     await firebaseObject
         .collection('chats')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('chatWith')
+        .doc(sendTo)
+        .set({
+      'id': sendTo,
+    });
+
+    await firebaseObject
+        .collection('chats')
         .doc(sendTo)
         .collection('chatWith')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -133,6 +158,14 @@ class InnerChatController extends GetxController {
             timestamp: Timestamp.now(),
           ).toMap(),
         );
+    await firebaseObject
+        .collection('chats')
+        .doc(sendTo)
+        .collection('chatWith')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({
+      'id': FirebaseAuth.instance.currentUser!.uid,
+    });
 
     messageTextFormFiled.clear();
   }

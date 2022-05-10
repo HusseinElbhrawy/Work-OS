@@ -21,6 +21,7 @@ class MyAccountController extends GetxController {
 
   void _getUserData() async {
     isLoading.value = true;
+    update();
     try {
       var value = await FirebaseFirestore.instance
           .collection('users')

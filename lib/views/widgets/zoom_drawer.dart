@@ -74,9 +74,10 @@ class MenuScreen extends GetView<StyleController> {
                       ),
                       Text(
                         controller.fullName.toString(),
+                        overflow: TextOverflow.ellipsis,
                         style: Get.isDarkMode
-                            ? CustomDarkTheme.kmediumHeadline(context)
-                            : CustomLightTheme.mediumHeadline(context),
+                            ? CustomDarkTheme.smallHeadline(context)
+                            : CustomLightTheme.smallHeadline(context),
                       ),
                     ],
                   ),
