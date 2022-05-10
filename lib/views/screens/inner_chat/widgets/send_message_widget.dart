@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:work_os/controller/inner_chat_controller.dart';
 
@@ -11,6 +12,7 @@ class SendMessageWidget extends StatelessWidget {
   }) : super(key: key);
   final String sendTo;
   static final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final InnerChatController controller = Get.put(InnerChatController());
@@ -27,12 +29,40 @@ class SendMessageWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            IconButton(
-              onPressed: () {
-                log('Printed');
-              },
-              icon: const Icon(
-                Icons.mic,
+            GetBuilder(
+              builder: (InnerChatController controller) => Material(
+                color: Colors.transparent,
+                child: GestureDetector(
+                  onLongPressStart: (details) async {
+                    HapticFeedback.heavyImpact();
+                    HapticFeedback.vibrate();
+                    HapticFeedback.vibrate();
+                    log('started');
+                    controller.record();
+                  },
+                  onLongPressEnd: (fetails) async {
+                    log('canceld');
+                    await controller.stop();
+                    controller.sendVoiceNote(sendTo: sendTo);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      child: controller.isVoiceUploded
+                          ? const Icon(
+                              Icons.upload,
+                              color: Colors.blue,
+                            )
+                          : Icon(
+                              controller.isRecordering ? Icons.stop : Icons.mic,
+                              color: controller.isRecordering
+                                  ? Colors.red
+                                  : Colors.white,
+                            ),
+                    ),
+                  ),
+                ),
               ),
             ),
             GetBuilder(
@@ -53,11 +83,12 @@ class SendMessageWidget extends StatelessWidget {
                           message: controller.messageTextFormFiled.text.trim(),
                           sendTo: sendTo,
                         );
+                        FocusScope.of(context).unfocus();
                       }
                     },
                     textInputAction: TextInputAction.send,
-                    decoration: const InputDecoration(
-                      hintText: 'Message...',
+                    decoration: InputDecoration(
+                      hintText: 'message'.tr,
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
@@ -76,6 +107,7 @@ class SendMessageWidget extends StatelessWidget {
                         message: controller.messageTextFormFiled.text.trim(),
                         sendTo: sendTo,
                       );
+                      FocusScope.of(context).unfocus();
                     }
                   },
                   icon: const Icon(

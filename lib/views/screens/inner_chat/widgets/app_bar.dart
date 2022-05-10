@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_os/controller/style_controller.dart';
 
+final StyleController styleController = Get.find();
 PreferredSizeWidget innerChatAppBar({
   required String name,
   required String imageUrl,
@@ -9,15 +11,6 @@ PreferredSizeWidget innerChatAppBar({
 }) {
   return AppBar(
     leadingWidth: 15,
-    leading: IconButton(
-      padding: const EdgeInsets.all(16),
-      onPressed: () {
-        Get.back();
-      },
-      icon: const Icon(
-        Icons.arrow_back_ios,
-      ),
-    ),
     title: ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
@@ -36,10 +29,13 @@ PreferredSizeWidget innerChatAppBar({
       ),
     ),
     actions: [
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(
-          Icons.more_vert,
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.more_vert,
+          ),
         ),
       ),
     ],

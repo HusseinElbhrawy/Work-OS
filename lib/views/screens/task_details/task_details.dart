@@ -180,13 +180,15 @@ class TaskDetailsScreen extends StatelessWidget {
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white,
                                   backgroundImage: NetworkImage(
-                                    _myAccountController.imageUrl,
+                                    _myAccountController.imageUrl.toString(),
                                   ),
                                 ),
                               ),
-                              title: Text(_myAccountController.fullName),
-                              subtitle:
-                                  Text(_myAccountController.positionInCompany),
+                              title: Text(
+                                  _myAccountController.fullName.toString()),
+                              subtitle: Text(_myAccountController
+                                  .positionInCompany
+                                  .toString()),
                             ),
                             Center(
                               child: GetBuilder(

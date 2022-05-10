@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter_zoom_drawer/config.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:work_os/utils/styles/theme.dart';
@@ -21,5 +22,13 @@ class StyleController extends GetxController {
       log(isDarkTheme.toString());
       update();
     }
+  }
+
+  final zoomDrawerController = ZoomDrawerController();
+
+  void toggleDrawer() {
+    print("Toggle drawer");
+    zoomDrawerController.toggle?.call();
+    update();
   }
 }

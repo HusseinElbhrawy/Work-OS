@@ -77,6 +77,8 @@ class MyLocalization implements Translations {
           'wrong_password_provided_for_that_user': 'كلمة المرور ليست صحيحه',
           'change_theme': 'تغير الثيم',
           'chats_screen': 'المحادثات',
+          'message': 'اكتب رسالتك',
+          'something_wrong': 'هناك شي ما خطأ',
         },
         'en': {
           'uploaed_task_suceesfully': 'Uploaed Task Suceesfully',
@@ -151,6 +153,8 @@ class MyLocalization implements Translations {
           'wrong_password_provided_for_that_user':
               'Wrong password provided for that user.',
           'chats_screen': 'Chats',
+          'message': 'Message...',
+          'something_wrong': 'Something wrong',
         },
       };
 }

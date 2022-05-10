@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 class MyAccountController extends GetxController {
   RxBool isLoading = false.obs;
 
-  late String fullName, email, phoneNumber, imageUrl, positionInCompany;
+  String? fullName, email, phoneNumber, imageUrl, positionInCompany;
 
   late bool isTheSameUser;
   late Timestamp date;
@@ -29,14 +29,16 @@ class MyAccountController extends GetxController {
       fullName = value['Name'];
       date = value['CreatedAt'];
       email = value['Email'];
-      imageUrl = value['ImageUrl'];
+      imageUrl = value['ImageUrl'] ?? '';
       phoneNumber = value['PhoneNumber'];
       positionInCompany = value['PositionInCompany'];
       isTheSameUser = value['Id'] == currentUserUid ? true : false;
       isLoading.value = false;
+      update();
     } catch (e) {
       isLoading.value = false;
       log(e.toString());
+      update();
     }
   }
 

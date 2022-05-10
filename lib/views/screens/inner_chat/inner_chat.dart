@@ -46,14 +46,12 @@ class InnerCharScreen extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasError) {
-            return const Center(
-              child: Text('Something wrong!'),
+            return Center(
+              child: Text('something_wrong'.tr),
             );
           } else if (snapshot.data!.docs.isEmpty) {
             return EmptyChatWidget(userData: userData);
           } else {
-            log(snapshot.data!.docs[0].data()['sendFrom']);
-
             return FullChatWidget(
               userData: userData,
               snapshot: snapshot,

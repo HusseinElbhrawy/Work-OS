@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageModel {
-  // final String? id;
-  final String messageContent;
+  final String? voiceLink;
+  final String? messageContent;
   final String sendTo;
   final String sendFrom;
   final Timestamp timestamp;
   MessageModel({
-    // this.id,
-    required this.messageContent,
+    this.voiceLink,
+    this.messageContent,
     required this.sendTo,
     required this.sendFrom,
     required this.timestamp,
@@ -18,7 +18,7 @@ class MessageModel {
 
   Map<String, dynamic> toMap() {
     return {
-      // 'id': id,
+      'voiceLink': voiceLink,
       'messageContent': messageContent,
       'sendTo': sendTo,
       'sendFrom': sendFrom,
@@ -28,7 +28,7 @@ class MessageModel {
 
   factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
-      // id: map['id'] ?? '',
+      voiceLink: map['voiceLink'] ?? '',
       messageContent: map['messageContent'] ?? '',
       sendTo: map['sendTo'] ?? '',
       sendFrom: map['sendFrom'] ?? '',

@@ -17,15 +17,20 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends GetView<StyleController> {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final LocalizationController langConroller =
         Get.put(LocalizationController());
-    final StyleController styleController = Get.put(StyleController());
+    final StyleController styleController = Get.put(
+      StyleController(),
+      permanent: true,
+    );
+
     return GetBuilder(
+      assignId: false,
       builder: (StyleController controller) {
         return GetMaterialApp(
           initialBinding: MyBinding(),
@@ -36,7 +41,7 @@ class MyApp extends StatelessWidget {
           theme: kLighTheme,
           darkTheme: kDarkTheme,
           themeMode: controller.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-          // home: const InnerCharScreen(),
+          // home: const MyTestPage(),
           home: SplashScreenView(
             navigateRoute: FutureBuilder(
               future: Firebase.initializeApp(),

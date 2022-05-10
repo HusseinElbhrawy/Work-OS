@@ -11,16 +11,18 @@ class EmptyChatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
-        const Spacer(),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/images/chat.png'),
+        Container(
+          margin: const EdgeInsets.only(top: 100),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.asset('assets/images/chat.png'),
+            ),
           ),
         ),
-        const Spacer(),
+        SizedBox(height: MediaQuery.of(context).size.height / 5.5),
         Align(
           alignment: AlignmentDirectional.bottomCenter,
           child: Padding(
@@ -28,7 +30,6 @@ class EmptyChatWidget extends StatelessWidget {
             child: SendMessageWidget(sendTo: userData['id']),
           ),
         ),
-        const SizedBox(height: 10),
       ],
     );
   }
