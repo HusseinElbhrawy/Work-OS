@@ -108,7 +108,7 @@ class ChatScreenItemWidget extends StatefulWidget {
 class _ChatScreenItemWidgetState extends State<ChatScreenItemWidget> {
   bool isLoading = false;
   late DocumentSnapshot<Map<String, dynamic>> data;
-  late QuerySnapshot<Map<String, dynamic>> last;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> last;
 
   void getAllData() async {
     isLoading = true;
@@ -117,16 +117,17 @@ class _ChatScreenItemWidgetState extends State<ChatScreenItemWidget> {
         .doc(widget.id)
         .get();
 
-    last = await FirebaseFirestore.instance
+    last = FirebaseFirestore.instance
         .collection('chats')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('chatWith')
         .doc(widget.id)
         .collection('messages')
         .limit(1)
-        .orderBy('timestamp')
-        .get();
+        .orderBy('timestamp', descending: true)
+        .snapshots();
     isLoading = false;
+    log(last.length.toString());
     setState(() {});
   }
 
@@ -168,8 +169,31 @@ class _ChatScreenItemWidgetState extends State<ChatScreenItemWidget> {
                       radius: 25,
                     ),
                     title: Text(data['Name']),
-                    subtitle: Text(last.docs.first.data()['messageContent'] ??
-                        'Voice Note'),
+                    subtitle: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('chats')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection('chatWith')
+                          .doc(widget.id)
+                          .collection('messages')
+                          .limit(1)
+                          .orderBy('timestamp', descending: true)
+                          .snapshots(),
+                      builder: (context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const SizedBox.shrink();
+                        } else {
+                          return Text(
+                            snapshot.data!.docs.first
+                                    .data()['messageContent'] ??
+                                'Voice Note',
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
               );
